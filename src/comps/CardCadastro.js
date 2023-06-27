@@ -1,18 +1,20 @@
+import React from 'react';
 import {useState, useEffect} from 'react';
 
-export default function CardCadastro(){
+export default function CardCadastro({alerta, setAlerta}){
 
-  //State com as informações necessarias para um novo registro na tabela Usuarios
-  const [formUser, setFormUser] = useState({
-    nome: '', email: ''
-  })
 
-  //State com as informações necessarias para um novo registro na tabela Contas
   const [form, setForm] = useState({
-    codConta: '', setSenha: '', idUsuario: ''
+    codConta: '',
+    setSenha: '',
+    idUsuario: '',
+    agencia: '0001'
+  });
+
+  const [formUser, setFormUser] = useState({
+    nome:''
   })
 
-  //Envio dos dados para a api, registrando uma nova conta, utilizando o id do usuario criado
   async function postConta(userId) {
     setForm({ ...form, idUsuario: userId });
     console.log(form);
@@ -24,6 +26,8 @@ export default function CardCadastro(){
       },
       body: JSON.stringify({ ...form, idUsuario: userId })
     })
+    .then(res=>res.json())
+    .then((data)=>{ setAlerta([...alerta,<div className='alert alert-info'> Conta: {data.codConta} Agencia:{data.agencia}, Criado com sucesso!</div>])})
     .catch(err => console.log(err));
   }
 
@@ -34,23 +38,24 @@ export default function CardCadastro(){
   }, [form.idUsuario]);
 
   async function handleSubmit() {
+
     fetch('https://localhost:7044/Usuario/Create', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(formUser)
     })
     .then((response) => response.json())
     .then((data) => {
       console.log(data.id);
       setForm({ ...form, idUsuario: data.id });
+
+      setAlerta([<div className='alert alert-info'>Usuario: {data.nome} Id: {data.id}. Criado com sucesso!</div>]);
     })
     .catch(err => console.log(err));
   }
 
     return(
-        <div className='col-md-3 card p-4 mt-5'>
+        <div className='card col-md-3 p-4 mt-5'>
           <div className="card-title">
             <h4 className='text-center'>Cadastre-se gratuitamente!</h4>
           </div>
@@ -67,6 +72,7 @@ export default function CardCadastro(){
                 ...form, ['codConta']: currentTarget.value
               })}/>
             </div>
+
             <div className="row mb-4">
               <label htmlFor="input-senha" className="form-label h6">Senha:</label>
               <input type="text" name='input-senha' className="form-control" onChange={({currentTarget}) => setForm({
