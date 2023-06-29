@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 
-export default function CardCadastro({alerta, setAlerta}){
+export default function CardLogin({alerta, setAlerta}){
 
 
   const [form, setForm] = useState({
@@ -12,10 +12,7 @@ export default function CardCadastro({alerta, setAlerta}){
   });
 
   const [formUser, setFormUser] = useState({
-    nome:'',
-    cpf: '',
-    email:'',
-    telefone:''
+    nome:''
   })
 
   async function postConta(userId) {
@@ -58,48 +55,21 @@ export default function CardCadastro({alerta, setAlerta}){
   }
 
     return(
-        <div className='card p-4 mt-5 col-md-6'>
+        <div className='card col-md-5 col-lg-3 p-4 mt-5'>
           <div className="card-title">
-            <h4 className='text-center'>Cadastre-se gratuitamente!</h4>
+            <h4 className='text-center'>Acesse sua conta</h4>
           </div>
-
           <div className='card-body'>
             <div className="row mb-3">
-              <div className='col p-0 pe-4'>
-                <label htmlFor="input-name" className="form-label h6">Nome:</label>
-                <input type="text" name='input-name' className="form-control" onChange={({currentTarget}) => setFormUser({
-                  ...formUser, ['nome']: currentTarget.value
-                })}/>
-              </div>
-
-              <div className='col p-0'>
-                <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
-                <input type="text" name='input-name' className="form-control" onChange={({currentTarget}) => setFormUser({
-                ...formUser, ['cpf']: currentTarget.value
-                })}/>
-              </div>
+              <label htmlFor="input-name" className="form-label h6">Nome:</label>
+              <input type="text" name='input-name' className="form-control" onChange={({currentTarget}) => setFormUser({
+                ...formUser, ['nome']: currentTarget.value
+              })}/>
             </div>
-            
             <div className="row mb-3">
-              <div className='col p-0 pe-4'>
-                <label htmlFor="input-name" className="form-label h6">Email:</label>
-                <input type="text" name='input-email' className="form-control" onChange={({currentTarget}) => setFormUser({
-                ...formUser, ['email']: currentTarget.value
-                })}/>
-              </div>
-
-              <div className='col p-0'>
-                  <label htmlFor="input-tel" className="form-label h6">Telefone:</label>
-                  <input type="text" name='input-tel' className="form-control" onChange={({currentTarget}) => setFormUser({
-                    ...formUser, ['telefone']: currentTarget.value
-                  })}/>
-                </div>
-            </div>
-            
-            <div className="row mb-3">
-              <label htmlFor="input-conta" className="form-label h6">Nº Conta:</label>
-              <input type="text" name='input-conta' className="form-control" onChange={({currentTarget}) => setForm({
-                ...form, ['codConta']: currentTarget.value
+              <label htmlFor="input-email" className="form-label h6">Email:</label>
+              <input type="text" name='input-email' className="form-control" onChange={({currentTarget}) => setForm({
+                ...form, ['email']: currentTarget.value
               })}/>
             </div>
 
