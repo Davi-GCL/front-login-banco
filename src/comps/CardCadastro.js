@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 
-export default function CardCadastro({alerta, setAlerta}){
+export default function CardCadastro({alerta, setAlerta, formUser, setFormUser}){
 
 
   const [form, setForm] = useState({
@@ -11,12 +11,6 @@ export default function CardCadastro({alerta, setAlerta}){
     agencia: '0001'
   });
 
-  const [formUser, setFormUser] = useState({
-    nome:'',
-    cpf: '',
-    email:'',
-    telefone:''
-  })
 
   async function postConta(userId) {
     setForm({ ...form, idUsuario: userId });
@@ -60,51 +54,37 @@ export default function CardCadastro({alerta, setAlerta}){
     return(
         <div className='card p-4 mt-5 col-md-6'>
           <div className="card-title">
-            <h4 className='text-center'>Cadastre-se gratuitamente!</h4>
+            <h4 className='text-center'>Abra uma conta gratuitamente!</h4>
           </div>
 
           <div className='card-body'>
             <div className="row mb-3">
               <div className='col p-0 pe-4'>
-                <label htmlFor="input-name" className="form-label h6">Nome:</label>
-                <input type="text" name='input-name' className="form-control" onChange={({currentTarget}) => setFormUser({
-                  ...formUser, ['nome']: currentTarget.value
-                })}/>
-              </div>
-
-              <div className='col p-0'>
-                <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
-                <input type="text" name='input-name' className="form-control" onChange={({currentTarget}) => setFormUser({
-                ...formUser, ['cpf']: currentTarget.value
-                })}/>
-              </div>
-            </div>
-            
-            <div className="row mb-3">
-              <div className='col p-0 pe-4'>
-                <label htmlFor="input-name" className="form-label h6">Email:</label>
-                <input type="text" name='input-email' className="form-control" onChange={({currentTarget}) => setFormUser({
-                ...formUser, ['email']: currentTarget.value
-                })}/>
-              </div>
-
-              <div className='col p-0'>
-                  <label htmlFor="input-tel" className="form-label h6">Telefone:</label>
-                  <input type="text" name='input-tel' className="form-control" onChange={({currentTarget}) => setFormUser({
-                    ...formUser, ['telefone']: currentTarget.value
-                  })}/>
-                </div>
-            </div>
-            
-            <div className="row mb-3">
-              <label htmlFor="input-conta" className="form-label h6">Nº Conta:</label>
-              <input type="text" name='input-conta' className="form-control" onChange={({currentTarget}) => setForm({
+                <label htmlFor="input-conta" className="form-label h6">Nº Conta:</label>
+                <input type="text" name='input-conta' className="form-control" onChange={({currentTarget}) => setForm({
                 ...form, ['codConta']: currentTarget.value
+                })}/>
+              </div>
+
+              <div className='col p-0'>
+                <label htmlFor="input-agencia" className="form-label h6">Agência:</label>
+                <input type="text" name='input-agencia' className="form-control" onChange={({currentTarget}) => setForm({
+                  ...form, ['agencia']: currentTarget.value
+                })}/>
+              </div>
+            </div>
+            
+            
+            
+            <div className="row mb-3">
+              <label htmlFor="input-tipo" className="form-label h6">Drop down:</label>
+              <input type="text" name='input-tipo' className="form-control" onChange={({currentTarget}) => setForm({
+                ...form, ['tipo']: currentTarget.value
               })}/>
             </div>
 
             <div className="row mb-3">
-              <label htmlFor="input-senha" className="form-label h6">Senha:</label>
+              <label htmlFor="input-senha" className="form-label h6">PIN:</label>
               <input type="password" name='input-senha' className="form-control" onChange={({currentTarget}) => setForm({
                 ...form, ['setSenha']: currentTarget.value
               })}/>

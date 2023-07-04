@@ -32,22 +32,22 @@ export default function CardLogin({alerta, setAlerta}){
           </div>
           <div className='card-body'>
             <div className="row mb-3">
-              <label htmlFor="input-name" className="form-label h6">Nome:</label>
-              <input type="text" name='input-name' className="form-control" onChange={({currentTarget}) => setFormUser({
-                ...formUser, ['nome']: currentTarget.value
+              <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
+              <input type="text" name='input-cpf' className="form-control" onChange={({currentTarget}) => setFormUser({
+                ...formUser, ['cpf']: currentTarget.value
               })}/>
             </div>
-            <div className="row mb-3">
+            {/* <div className="row mb-3">
               <label htmlFor="input-email" className="form-label h6">Email:</label>
               <input type="text" name='input-email' className="form-control" onChange={({currentTarget}) => setForm({
                 ...form, ['email']: currentTarget.value
               })}/>
-            </div>
+            </div> */}
 
             <div className="row mb-3">
               <label htmlFor="input-senha" className="form-label h6">Senha:</label>
               <input type="password" name='input-senha' className="form-control" onChange={({currentTarget}) => setForm({
-                ...form, ['setSenha']: currentTarget.value
+                ...form, ['senha']: currentTarget.value
               })}/>
             </div>
             {/* <div className="row mb-3">
