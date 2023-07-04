@@ -1,11 +1,12 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 
-export default function CardCadastro({alerta, setAlerta, formUser, setFormUser}){
+export default function CardCadastro({alerta, setAlerta, formUser, toNextForm}){
 
 
   const [form, setForm] = useState({
     codConta: '',
+    tipo:0,
     setSenha: '',
     idUsuario: '',
     agencia: '0001'
@@ -77,10 +78,11 @@ export default function CardCadastro({alerta, setAlerta, formUser, setFormUser})
             
             
             <div className="row mb-3">
-              <label htmlFor="input-tipo" className="form-label h6">Drop down:</label>
-              <input type="text" name='input-tipo' className="form-control" onChange={({currentTarget}) => setForm({
-                ...form, ['tipo']: currentTarget.value
-              })}/>
+              <label htmlFor="input-tipo" className="form-label h6">Tipo de conta:</label>
+              <select className="form-select" name='input-tipo' onChange={({currentTarget}) =>setForm({...form, ['tipo']: currentTarget.value})}>
+                <option value="0">Poupança</option>
+                <option value="1">Corrente</option>
+              </select>
             </div>
 
             <div className="row mb-3">
@@ -95,6 +97,7 @@ export default function CardCadastro({alerta, setAlerta, formUser, setFormUser})
                 ...form, ['setSenha']: currentTarget.value
               })}/>
             </div> */}
+            <a className='btn-return' onClick={()=>{toNextForm(0)}}>Retornar</a>
             <div className="button-area row mt-4">
               <button type="submit" className='btn btn-success w-100' onClick={handleSubmit}>Cadastrar</button>
             </div>
