@@ -5,12 +5,22 @@ import App from './App';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import TelaLogin from './routes/TelaLogin';
 import TelaCadastro from './routes/TelaCadastro';
+import TelaRestrita from './routes/TelaRestrita';
+import TelaHome from './routes/TelaHome';
 
 const router = createBrowserRouter([
   {
     path:"/",
     element: <App />,
     children:[
+      {
+        path:"home",
+        element: <TelaHome/>
+      },
+      {
+        path:"acesso",
+        element: <TelaRestrita/>
+      },
       {
         path:"cadastro",
         element: <TelaCadastro/>

@@ -30,7 +30,7 @@ export default function TelaCadastro() {
 
     return (
     <React.Fragment>
-        {alerta.map((aux)=>{return aux})}
+        <div className="position-fixed start-50 translate-middle w-50" style={{top:'18%',zIndex:999}}>{alerta.map((aux)=>{return aux})}</div>
         { display === 1? <CardCadastro states={[form, setForm, formUser, alerta, setAlerta]} toNextForm={toNextForm}/> : <CardCadastroUs formUser={formUser} setFormUser={setFormUser} toNextForm={toNextForm}/>}
         
     </React.Fragment>

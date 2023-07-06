@@ -20,8 +20,12 @@ export default function CardLogin({alerta, setAlerta}){
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      if(data == true){
+
+      if(data.valid == true){
         setAlerta([<div className='alert alert-info'>Autenticado com sucesso!</div>]);
+        localStorage.setItem('loginId',data.id.toString());
+
+        window.location.href="/acesso";
       }else{
         setAlerta([<div className='alert alert-danger'>CPF ou senha incorretos!</div>]);
       }

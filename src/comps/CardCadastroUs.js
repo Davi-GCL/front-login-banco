@@ -2,10 +2,18 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 
 export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
+  const[emailValid, setEmailValid] = useState(true);
 
+  useEffect(()=>{
+    const btnNext = document.getElementById('btn-next');
+    if(emailValid == false){
+      btnNext.classList.toggle("disabled",true);
+    }
+    else{btnNext.classList.toggle("disabled",false);}
+  },[emailValid])
 
     return(
-        <div className='card p-4 mt-5 col-md-6'>
+        <div className='card p-4 mt-5 col-md-6 position-relative'>
           <div className="card-title">
             <h4 className='text-center'>Cadastre-se gratuitamente!</h4>
           </div>
@@ -32,7 +40,10 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                 <label htmlFor="input-name" className="form-label h6">Email:</label>
                 <input type="email" name='input-email' className="form-control" value={formUser['email']} onChange={({currentTarget}) => setFormUser({
                 ...formUser, ['email']: currentTarget.value
-                })}/>
+                })}
+                onBlur={({currentTarget}) =>validarEmail(currentTarget, setEmailValid)}
+                />
+                <div class="form-text text-danger">{emailValid == false?'E-mail invalido!':''} </div>
               </div>
 
               <div className='col p-0'>
@@ -56,9 +67,30 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
               })}/>
             </div> */}
             <div className="button-area row mt-4">
-              <button type="submit" className='btn btn-success w-100' onClick={()=>{toNextForm(1)}}>Avançar</button>
+              <button type="submit" className='btn btn-primary w-100' id='btn-next' onClick={()=>{toNextForm(1)}}>Avançar</button>
             </div>
           </div>
         </div>
     )
+}
+
+function validarEmail(field , setEmailValid) {
+  let usuario = field.value.substring(0, field.value.indexOf("@"));
+  let dominio = field.value.substring(field.value.indexOf("@")+ 1, field.value.length);
+  
+  if ((usuario.length >=1) &&
+      (dominio.length >=3) &&
+      (usuario.search("@")==-1) &&
+      (dominio.search("@")==-1) &&
+      (usuario.search(" ")==-1) &&
+      (dominio.search(" ")==-1) &&
+      (dominio.search(".")!=-1) &&
+      (dominio.indexOf(".") >=1)&&
+      (dominio.lastIndexOf(".") < dominio.length - 1)) {
+    setEmailValid(true);
+  }
+  else{
+  
+  setEmailValid(false);
+  }
 }
