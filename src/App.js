@@ -12,7 +12,7 @@ function App() {
     <React.Fragment>
     <NavBar/>
     <div className="container w-100">
-      <div className='row justify-content-center'>
+      <div className='row mt-5 justify-content-center'>
         <Outlet />
       </div>
     </div>

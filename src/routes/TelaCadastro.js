@@ -15,6 +15,14 @@ export default function TelaCadastro() {
         setSenha:''
       })
 
+      const [form, setForm] = useState({
+        codConta: '',
+        tipo:0,
+        setSenha: '',
+        idUsuario: '',
+        agencia: ''
+      });
+
     function toNextForm(x){
         setDisplay(x);
     }
@@ -23,7 +31,7 @@ export default function TelaCadastro() {
     return (
     <React.Fragment>
         {alerta.map((aux)=>{return aux})}
-        { display === 1? <CardCadastro formUser={formUser} alerta={alerta} setAlerta={setAlerta} toNextForm={toNextForm}/> : <CardCadastroUs formUser={formUser} setFormUser={setFormUser} toNextForm={toNextForm}/>}
+        { display === 1? <CardCadastro states={[form, setForm, formUser, alerta, setAlerta]} toNextForm={toNextForm}/> : <CardCadastroUs formUser={formUser} setFormUser={setFormUser} toNextForm={toNextForm}/>}
         
     </React.Fragment>
     )

@@ -3,26 +3,30 @@ import {useState, useEffect} from 'react';
 
 export default function CardLogin({alerta, setAlerta}){
 
-  const [form, setForm] = useState({
-    codConta: '',
-    setSenha: '',
-    idUsuario: '',
-    agencia: '0001'
-  });
 
-  const [formUser, setFormUser] = useState({
-    nome:'',
-    cpf: '',
-    email:'',
-    telefone:''
+  const [formLogin, setFormLogin] = useState({
+    senha:'',
+    cpf: ''
+
   })
 
-  async function handleGet(){
+  async function handleSubmit() {
 
-    fetch(`https://localhost:7044/Usuario`,{
-      method:'GET',
-      headers:{'content-type':'application/json'},
-    }).then(res=>res.json()).then(data=>{console.log(data)})
+    fetch('https://localhost:7044/Usuario/Auth', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(formLogin)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if(data == true){
+        setAlerta([<div className='alert alert-info'>Autenticado com sucesso!</div>]);
+      }else{
+        setAlerta([<div className='alert alert-danger'>CPF ou senha incorretos!</div>]);
+      }
+    })
+    .catch(err => console.log(err));
   }
 
     return(
@@ -33,8 +37,8 @@ export default function CardLogin({alerta, setAlerta}){
           <div className='card-body'>
             <div className="row mb-3">
               <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
-              <input type="text" name='input-cpf' className="form-control" onChange={({currentTarget}) => setFormUser({
-                ...formUser, ['cpf']: currentTarget.value
+              <input type="text" name='input-cpf' className="form-control" onChange={({currentTarget}) => setFormLogin({
+                ...formLogin, ['cpf']: currentTarget.value
               })}/>
             </div>
             {/* <div className="row mb-3">
@@ -46,8 +50,8 @@ export default function CardLogin({alerta, setAlerta}){
 
             <div className="row mb-3">
               <label htmlFor="input-senha" className="form-label h6">Senha:</label>
-              <input type="password" name='input-senha' className="form-control" onChange={({currentTarget}) => setForm({
-                ...form, ['senha']: currentTarget.value
+              <input type="password" name='input-senha' className="form-control" onChange={({currentTarget}) => setFormLogin({
+                ...formLogin, ['senha']: currentTarget.value
               })}/>
             </div>
             {/* <div className="row mb-3">
@@ -57,7 +61,7 @@ export default function CardLogin({alerta, setAlerta}){
               })}/>
             </div> */}
             <div className="button-area row mt-4">
-              <button type="submit" className='btn btn-success w-100' onClick={handleGet}>Entrar</button>
+              <button type="submit" className='btn btn-success w-100' onClick={handleSubmit}>Entrar</button>
             </div>
           </div>
         </div>

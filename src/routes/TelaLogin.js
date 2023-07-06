@@ -7,8 +7,8 @@ export default function TelaLogin() {
     
     return (
         <React.Fragment>
-        {alerta.map((aux)=>{return aux})}
-        <CardLogin alerta={alerta} setAlerta={setAlerta}/>
+            <div className="position-fixed start-50 translate-middle w-50" style={{top:'10%',zIndex:999}}>{alerta.map((aux)=>{return aux})}</div>
+            <CardLogin alerta={alerta} setAlerta={setAlerta}/>
         </React.Fragment>
     )
 }
