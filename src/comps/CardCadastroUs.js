@@ -3,14 +3,15 @@ import {useState, useEffect} from 'react';
 
 export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
   const[emailValid, setEmailValid] = useState(true);
+  const[cpfValid, setCpfValid] = useState(true);
 
   useEffect(()=>{
     const btnNext = document.getElementById('btn-next');
-    if(emailValid == false){
+    if(emailValid == false || cpfValid == false){
       btnNext.classList.toggle("disabled",true);
     }
     else{btnNext.classList.toggle("disabled",false);}
-  },[emailValid])
+  },[emailValid, cpfValid])
 
     return(
         <div className='card p-4 mt-5 col-md-6 position-relative'>
@@ -31,7 +32,8 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                 <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
                 <input type="text" name='input-name' className="form-control" value={formUser['cpf']} onChange={({currentTarget}) => setFormUser({
                 ...formUser, ['cpf']: currentTarget.value
-                })}/>
+                })} onBlur={({currentTarget}) =>validarCPF(currentTarget.value, setCpfValid)}/>
+                <div class="form-text text-danger">{cpfValid == false?'CPF invalido':''} </div>
               </div>
             </div>
             
@@ -41,7 +43,7 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                 <input type="email" name='input-email' className="form-control" value={formUser['email']} onChange={({currentTarget}) => setFormUser({
                 ...formUser, ['email']: currentTarget.value
                 })}
-                onBlur={({currentTarget}) =>validarEmail(currentTarget, setEmailValid)}
+                onBlur={({currentTarget}) =>validarEmail(currentTarget.value, setEmailValid)}
                 />
                 <div class="form-text text-danger">{emailValid == false?'E-mail invalido!':''} </div>
               </div>
@@ -74,9 +76,9 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
     )
 }
 
-function validarEmail(field , setEmailValid) {
-  let usuario = field.value.substring(0, field.value.indexOf("@"));
-  let dominio = field.value.substring(field.value.indexOf("@")+ 1, field.value.length);
+function validarEmail(value , setEmailValid) {
+  let usuario = value.substring(0, value.indexOf("@"));
+  let dominio = value.substring(value.indexOf("@")+ 1, value.length);
   
   if ((usuario.length >=1) &&
       (dominio.length >=3) &&
@@ -93,4 +95,44 @@ function validarEmail(field , setEmailValid) {
   
   setEmailValid(false);
   }
+}
+
+function validarCPF(cpf, setCpfValid) {
+  let i;
+  var soma = 0;
+  var resto;
+  let strCPF = cpf.replaceAll('.','').replaceAll('-','');
+  
+  if (strCPF == "00000000000") {
+    setCpfValid(false);
+    return;
+  };
+
+  for (i=1; i<=9; i++) {
+    soma = soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+    resto = (soma * 10) % 11
+  };
+
+  if ((resto == 10) || (resto == 11))  resto = 0;
+  if (resto != parseInt(strCPF.substring(9, 10)) ){
+    setCpfValid(false);
+    return;
+  }
+
+  soma = 0;
+  for (i = 1; i <= 10; i++) {
+    soma = soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+  }
+  resto = (soma * 10) % 11;
+
+  if ((resto == 10) || (resto == 11)){
+    resto = 0;
+  }
+  if (resto != parseInt(strCPF.substring(10, 11) ) ) {
+    setCpfValid(false);
+    return;
+  }
+
+  setCpfValid(true);
+  return;
 }

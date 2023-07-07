@@ -5,29 +5,6 @@ export default function CardCadastro({toNextForm , states}){
 
   const [form, setForm, formUser, alerta, setAlerta] = states;
   const [camposVazios, setCamposVazios] = useState([]);
-
-  function validaCPF(cpf) {
-    let i;
-    var Soma = 0;
-    var Resto;
-    let strCPF = cpf.replaceAll('.','').replaceAll('-','');
-    
-  if (strCPF == "00000000000") return false;
-  
-  for (i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
-  Resto = (Soma * 10) % 11;
-  
-    if ((Resto == 10) || (Resto == 11))  Resto = 0;
-    if (Resto != parseInt(strCPF.substring(9, 10)) ) return false;
-  
-  Soma = 0;
-    for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
-    Resto = (Soma * 10) % 11;
-  
-    if ((Resto == 10) || (Resto == 11))  Resto = 0;
-    if (Resto != parseInt(strCPF.substring(10, 11) ) ) return false;
-    return true;
-  }
   
 //-----------------------------------\\
 
@@ -56,8 +33,6 @@ export default function CardCadastro({toNextForm , states}){
   }, [form.idUsuario]);
 
   async function handleSubmit() {
-  
-    alert(validaCPF(formUser['cpf']));
 
     const camposVazios = Object.keys(form).filter((campo) => campo != 'idUsuario' && form[campo] === '' || form[campo] === ' ');
     const camposVaziosUser = Object.keys(formUser).filter((campo) => formUser[campo] === '' || formUser[campo] === ' ');
