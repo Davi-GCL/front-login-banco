@@ -4,14 +4,20 @@ import {useState, useEffect} from 'react';
 export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
   const[emailValid, setEmailValid] = useState(true);
   const[cpfValid, setCpfValid] = useState(true);
+  const[blockBtn, setBlockBtn] = useState(true);
 
+  //Algoritmo que é acionado quando uma das depencias (states emailValid, cpfValid) tem o valor modificado
+  //Habilita ou desabilita o botão de avançar, se caso os campos forem invalidos
   useEffect(()=>{
-    const btnNext = document.getElementById('btn-next');
-    if(emailValid == false || cpfValid == false){
-      btnNext.classList.toggle("disabled",true);
+    const camposVaziosUser = Object.keys(formUser).filter((campo) => formUser[campo] === '' || formUser[campo] === ' ');
+    console.log("campos vazios: " + camposVaziosUser)
+    if(emailValid == false || cpfValid == false || camposVaziosUser.length > 0){
+      setBlockBtn(true);
     }
-    else{btnNext.classList.toggle("disabled",false);}
-  },[emailValid, cpfValid])
+    else{setBlockBtn(false);}
+  },[emailValid, cpfValid, formUser])
+
+
 
     return(
         <div className='card p-4 mt-5 col-md-6 position-relative'>
@@ -25,14 +31,16 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                 <label htmlFor="input-name" className="form-label h6">Nome:</label>
                 <input type="text" name='input-name' className="form-control" value={formUser['nome']} onChange={({currentTarget}) => setFormUser({
                   ...formUser, ['nome']: currentTarget.value
-                })}/>
+                })}
+                required/>
               </div>
 
               <div className='col p-0'>
                 <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
                 <input type="text" name='input-name' className="form-control" value={formUser['cpf']} onChange={({currentTarget}) => setFormUser({
                 ...formUser, ['cpf']: currentTarget.value
-                })} onBlur={({currentTarget}) =>validarCPF(currentTarget.value, setCpfValid)}/>
+                })} onBlur={({currentTarget}) =>validarCPF(currentTarget.value, setCpfValid)}
+                required/>
                 <div class="form-text text-danger">{cpfValid == false?'CPF invalido':''} </div>
               </div>
             </div>
@@ -44,7 +52,7 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                 ...formUser, ['email']: currentTarget.value
                 })}
                 onBlur={({currentTarget}) =>validarEmail(currentTarget.value, setEmailValid)}
-                />
+                required/>
                 <div class="form-text text-danger">{emailValid == false?'E-mail invalido!':''} </div>
               </div>
 
@@ -52,7 +60,7 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                   <label htmlFor="input-tel" className="form-label h6">Telefone:</label>
                   <input type="text" name='input-tel' className="form-control" value={formUser['telefone']} onChange={({currentTarget}) => setFormUser({
                     ...formUser, ['telefone']: currentTarget.value
-                  })}/>
+                  })} required/>
                 </div>
             </div>
 
@@ -69,7 +77,7 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
               })}/>
             </div> */}
             <div className="button-area row mt-4">
-              <button type="submit" className='btn btn-primary w-100' id='btn-next' onClick={()=>{toNextForm(1)}}>Avançar</button>
+              <button type="submit" className={`btn btn-primary w-100 ${blockBtn?' disabled' : ' '}`} id='btn-next' onClick={()=>{toNextForm(1)}}>Avançar</button>
             </div>
           </div>
         </div>
