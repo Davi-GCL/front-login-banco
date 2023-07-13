@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
   const[emailValid, setEmailValid] = useState(true);
   const[cpfValid, setCpfValid] = useState(true);
-  const[blockBtn, setBlockBtn] = useState(true);
+  const[disableBtn, SetDisableBtn] = useState(true);
 
   //Algoritmo que é acionado quando uma das depencias (states emailValid, cpfValid) tem o valor modificado
   //Habilita ou desabilita o botão de avançar, se caso os campos forem invalidos
@@ -12,9 +12,9 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
     const camposVaziosUser = Object.keys(formUser).filter((campo) => formUser[campo] === '' || formUser[campo] === ' ');
     console.log("campos vazios: " + camposVaziosUser)
     if(emailValid == false || cpfValid == false || camposVaziosUser.length > 0){
-      setBlockBtn(true);
+      SetDisableBtn(true);
     }
-    else{setBlockBtn(false);}
+    else{SetDisableBtn(false);}
   },[emailValid, cpfValid, formUser])
 
 
@@ -24,6 +24,7 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
           <div className="card-title">
             <h4 className='text-center'>Cadastre-se gratuitamente!</h4>
           </div>
+            <h6 className='subtitle ms-1 text-primary'>Etapa 1</h6>
 
           <div className='card-body'>
             <div className="row mb-3">
@@ -65,7 +66,7 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
             </div>
 
             <div className="row mb-3">
-              <label htmlFor="input-senha" className="form-label h6">Senha:</label>
+              <label htmlFor="input-senha" className="form-label h6 p-0">Senha:</label>
               <input type="password" name='input-senha' className="form-control" value={formUser['setSenha']} onChange={({currentTarget}) => setFormUser({
                 ...formUser, ['setSenha']: currentTarget.value
               })} required/>
@@ -77,7 +78,7 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
               })}/>
             </div> */}
             <div className="button-area row mt-4">
-              <button type="submit" className={`btn btn-primary w-100 ${blockBtn?' disabled' : ' '}`} id='btn-next' onClick={()=>{toNextForm(1)}}>Avançar</button>
+              <button type="submit" className={`btn btn-primary w-100 ${disableBtn?' disabled' : ' '}`} id='btn-next' onClick={()=>{toNextForm(1)}}>Avançar</button>
             </div>
           </div>
         </div>

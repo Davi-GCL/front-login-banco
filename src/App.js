@@ -1,3 +1,6 @@
+//Avisar ao usuario os campos não preenchidos e que são obrigatorios 
+//Verificar se o cpf ou email inseridos já estão registrados no banco de dados
+
 import React from "react";
 import {useEffect, useState} from "react";
 import './App.css';

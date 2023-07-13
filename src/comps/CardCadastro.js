@@ -66,8 +66,9 @@ export default function CardCadastro({toNextForm , states}){
     return(
         <div className='card p-4 mt-5 col-md-6'>
           <div className="card-title">
-            <h4 className='text-center'>Abra uma conta gratuitamente!</h4>
+            <h4 className='text-center'>Cadastre-se gratuitamente </h4>
           </div>
+          <h6 className='subtitle ms-1 text-primary'>Etapa 2</h6>
 
           <div className='card-body'>
             <div className="row mb-3">
@@ -97,11 +98,12 @@ export default function CardCadastro({toNextForm , states}){
               </select>
             </div>
 
-            <div className="row mb-3">
+            <div className="row mb-3 p-1">
               <label htmlFor="input-senha" className="form-label h6">PIN:</label>
               <input type="password" name='input-senha' value={form['setSenha']} className="form-control" onChange={({currentTarget}) => setForm({
                 ...form, ['setSenha']: currentTarget.value
               })}/>
+              <li className='form-text'></li>
             </div>
             {/* <div className="row mb-3">
               <label htmlFor="input-confsenha" className="form-label h6">Confirmar Senha:</label>
