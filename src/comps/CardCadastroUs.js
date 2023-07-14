@@ -1,7 +1,9 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 
-export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
+export default function CardCadastroUs({states}){
+  const {toNextForm, formUser, setFormUser, dataExist} = states;
+
   const[emailValid, setEmailValid] = useState(true);
   const[cpfValid, setCpfValid] = useState(true);
   const[disableBtn, SetDisableBtn] = useState(true);
@@ -42,7 +44,8 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                 ...formUser, ['cpf']: currentTarget.value
                 })} onBlur={({currentTarget}) =>validarCPF(currentTarget.value, setCpfValid)}
                 required/>
-                <div class="form-text text-danger">{cpfValid == false?'CPF invalido':''} </div>
+                <span class="form-text text-danger">{cpfValid == false?'CPF invalido':''} </span>
+                <span class="form-text text-danger">{dataExist.cpf == true?'CPF já cadastrado':''} </span>
               </div>
             </div>
             
@@ -54,7 +57,8 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                 })}
                 onBlur={({currentTarget}) =>validarEmail(currentTarget.value, setEmailValid)}
                 required/>
-                <div class="form-text text-danger">{emailValid == false?'E-mail invalido!':''} </div>
+                <span class="form-text text-danger">{emailValid == false?'E-mail invalido!':''} </span>
+                <span class="form-text text-danger">{dataExist.email == true?'E-mail já cadastrado!':''} </span>
               </div>
 
               <div className='col p-0'>
@@ -62,6 +66,7 @@ export default function CardCadastroUs({toNextForm, formUser, setFormUser}){
                   <input type="text" name='input-tel' className="form-control" value={formUser['telefone']} onChange={({currentTarget}) => setFormUser({
                     ...formUser, ['telefone']: currentTarget.value
                   })} required/>
+                  <span class="form-text text-danger">{dataExist.telefone == true?'Telefone já cadastrado!':''} </span>
                 </div>
             </div>
 

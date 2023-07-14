@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 
 export default function CardCadastro({toNextForm , states}){
 
-  const [form, setForm, formUser, alerta, setAlerta] = states;
+  const {form, setForm, formUser, alerta, setAlerta, dataExist,setDataExist} = states;
   const [camposVazios, setCamposVazios] = useState([]);
   
 //-----------------------------------\\
@@ -51,12 +51,25 @@ export default function CardCadastro({toNextForm , states}){
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(formUser)
     })
-    .then((response) => response.json())
+    .then((response) => {
+      // if (!response.ok) {
+      //   throw new Error(response.status + ' ' + response.);
+      // }
+      return response.json();
+    })
     .then((data) => {
-      console.log(data.id);
-      setForm({ ...form, idUsuario: data.id });
+      console.log(data);
+      console.log(typeof(data.cpf))
+      if(typeof(data.cpf) !== "boolean"){
+        setForm({ ...form, idUsuario: data.id });
 
-      setAlerta([<div className='alert alert-info'>Usuario: {data.nome} Id: {data.id}. Criado com sucesso!</div>]);
+        setAlerta([<div className='alert alert-info'>Usuario: {data.nome} Id: {data.id}. Criado com sucesso!</div>]);
+      }
+      else{
+        setDataExist({...data});
+        setAlerta([<div className='alert alert-warning'>CPF, Email ou Telefone já foram cadastrados!</div>]);
+      }
+
     })
     .catch(err => console.log(err));
     }
