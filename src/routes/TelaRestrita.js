@@ -31,7 +31,7 @@ function TelaRestrita() {
         <hr></hr>
       <ul>
         <li>Saldo: R${conta['saldo']}</li>
-        <li>Tipo: {conta['saldo'] == 0? 'Poupança':'Corrente'}</li>
+        <li>Tipo: {conta['tipo'] == 0? 'Poupança':'Corrente'}</li>
       </ul>
     </div>
   )

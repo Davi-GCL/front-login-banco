@@ -21,7 +21,7 @@ export default function TelaCadastro() {
       })
 
       const [form, setForm] = useState({
-        codConta: '',
+        codConta: 0,
         tipo:0,
         setSenha: '',
         idUsuario: '',

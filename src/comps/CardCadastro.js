@@ -59,15 +59,14 @@ export default function CardCadastro({toNextForm , states}){
     })
     .then((data) => {
       console.log(data);
-      console.log(typeof(data.cpf))
-      if(typeof(data.cpf) !== "boolean"){
-        setForm({ ...form, idUsuario: data.id });
-
-        setAlerta([<div className='alert alert-info'>Usuario: {data.nome} Id: {data.id}. Criado com sucesso!</div>]);
-      }
-      else{
+      console.log(typeof(data.Cpf))
+      if(typeof(data.Cpf) == "boolean" || typeof(data.cpf) == "boolean"){
         setDataExist({...data});
         setAlerta([<div className='alert alert-warning'>CPF, Email ou Telefone já foram cadastrados!</div>]);
+      }
+      else{
+        setForm({ ...form, idUsuario: data.Id });
+        setAlerta([<div className='alert alert-info'>Usuario: {data.Nome} Id: {data.Id}. Criado com sucesso!</div>]);
       }
 
     })
@@ -77,7 +76,7 @@ export default function CardCadastro({toNextForm , states}){
   }
 
     return(
-        <div className='card p-4 mt-5 col-md-6'>
+        <div className='card px-5 py-4 mt-5 col-lg-4 col-md-6'>
           <div className="card-title">
             <h4 className='text-center'>Cadastre-se gratuitamente </h4>
           </div>
@@ -85,20 +84,19 @@ export default function CardCadastro({toNextForm , states}){
 
           <div className='card-body'>
             <div className="row mb-3">
-
-              <div className='col p-0 pe-4'>
+              <div className='col p-0'>
                 <label htmlFor="input-agencia" className="form-label h6">Agência:</label>
                 <input type="text" name='input-agencia' className="form-control" value={form['agencia']} onChange={({currentTarget}) => setForm({
                   ...form, ['agencia']: currentTarget.value
                 })}/>
               </div>
 
-              <div className='col p-0 '>
+              {/* <div className='col p-0 '>
                 <label htmlFor="input-conta" className="form-label h6">Nº Conta:</label>
                 <input type="text" name='input-conta' className="form-control" value={form['codConta']} onChange={({currentTarget}) => setForm({
                 ...form, ['codConta']: currentTarget.value
                 })}/>
-              </div>
+              </div> */}
             </div>
             
             
@@ -111,12 +109,13 @@ export default function CardCadastro({toNextForm , states}){
               </select>
             </div>
 
-            <div className="row mb-3 p-1">
+            <div className="row mb-3">
               <label htmlFor="input-senha" className="form-label h6">PIN:</label>
-              <input type="password" name='input-senha' value={form['setSenha']} className="form-control" onChange={({currentTarget}) => setForm({
+              <input type="password" name='input-senha' placeholder='Definir senha de transações na conta' value={form['setSenha']} className="form-control" onChange={({currentTarget}) => setForm({
                 ...form, ['setSenha']: currentTarget.value
               })}/>
-              <li className='form-text'></li>
+              <li className='form-text'>Apenas números</li>
+              <li className='form-text'>4 caracteres</li>
             </div>
             {/* <div className="row mb-3">
               <label htmlFor="input-confsenha" className="form-label h6">Confirmar Senha:</label>
