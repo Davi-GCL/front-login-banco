@@ -32,7 +32,6 @@ export default function TelaCadastro() {
         setDisplay(x);
     }
 
-
     return (
     <React.Fragment>
         <div className="position-fixed start-50 translate-middle w-50" style={{top:'18%',zIndex:999}}>{alerta.map((aux)=>{return aux})}</div>
