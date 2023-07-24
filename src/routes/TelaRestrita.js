@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createContext, useRef } from 'react'
+import CardConta from '../comps/CardConta';
 
 
+export const ContaContext = createContext(); 
 
-var controle = 0;
 function TelaRestrita() {
   const id = localStorage.getItem('loginId');
+  const dono = useRef('');
+  const [censor, setCensor] = useState(true); //Estado que comanda se os valores serão exibidos ou ocultos
   const [contas,setContas] = useState([{
     codConta: 0,
+    agencia: '',
     saldo: 0,
-    tipo: 0
+    tipo: 0,
+    idUsuario: 0
   }])
   
 
@@ -16,14 +21,19 @@ function TelaRestrita() {
     let res = await fetch(`https://localhost:7044/Conta/`, {
       method: 'GET',
     })
-
     let data = await res.json()
+    
     console.log(data);
+    
+    let dataArr = [];
+
     data.forEach(e => {
       if(e.idUsuario == id){
-        setContas([...contas,{['codConta']:e.codConta, ['saldo']:e.saldo , ['tipo']:e.tipo}]);
+        dataArr.push({['codConta']:e.codConta, ['agencia']:e.agencia,['saldo']:e.saldo , ['tipo']:e.tipo , ['idUsuario']:e.idUsuario});
+        dono.current = e.idUsuarioNavigation.nome;
       }  
-    })
+    });
+    setContas(dataArr);
   }
 
   //Algoritmo para que faz a função de buscar dados na api só seja executada uma vez:
@@ -31,23 +41,28 @@ function TelaRestrita() {
     handleGet();
   }, []); // A lista de dependências vazia indica que o efeito será executado apenas uma vez, após a montagem do componente.
 
-  return (
-    <React.Fragment>
-      {contas.map((conta)=>{
-        if(conta.codConta !== 0){
-          return (<div className='alert alert-light' key={conta.codConta}>
-            <h5>Conta N°{conta['codConta']}</h5>
-            <hr></hr>
-          <ul>
-            <li className='password'>Saldo: R${conta['saldo']}</li>
-            <li>Tipo: {conta['tipo'] == 0? 'Poupança':'Corrente'}</li>
-          </ul>
-        </div>)
-        }else{ return null }
-      })
-      }
-    </React.Fragment>
-  )
+  if(id){
+    return (
+      <ContaContext.Provider value={{censor}}>
+        <div className='header'>
+          <h4 className='mb-2'>Olá, {dono.current}</h4>
+          <p>Selecione a conta que deseja movimentar hoje:</p>
+          <span className='d-flex justify-content-end'><button className='btn btn-primary mb-4 w-10' onClick={(e)=>{setCensor(!censor);}}>Exibir saldos</button></span>
+        </div>
+        {contas.map((conta)=>{
+          if(conta.codConta !== 0){
+            return (<CardConta conta={conta}/>)
+          }else{ return null }
+        })
+        }
+      </ContaContext.Provider>
+    )
+  }else{
+    return (<div>
+      <h2>Acesso não permitido!</h2>
+      <a href='/login'>Faça login em sua conta</a>
+      </div>)
+  }
 }
 
 export default TelaRestrita

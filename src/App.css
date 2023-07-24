@@ -1,0 +1,12 @@
+.text-censor{
+    -webkit-text-security: disc;
+}
+
+.card-account{
+    transition: all linear 0.3s;
+    cursor: pointer;
+}
+.card-account:hover{
+    background-color: rgb(236, 235, 235);
+    /* box-shadow: 0px 0px 5px rgb(158, 158, 158); */
+}

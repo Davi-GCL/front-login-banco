@@ -25,7 +25,7 @@ export default function CardLogin({alerta, setAlerta}){
         setAlerta([<div className='alert alert-info'>Autenticado com sucesso!</div>]);
         localStorage.setItem('loginId',data.id.toString());
 
-        window.location.href="/acesso";
+        window.location.href="/contas";
       }else{
         setAlerta([<div className='alert alert-danger'>CPF ou senha incorretos!</div>]);
       }
