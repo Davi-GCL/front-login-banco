@@ -76,7 +76,7 @@ export default function CardCadastro({toNextForm , states}){
   }
 
     return(
-        <div className='card px-5 py-4 mt-5 col-lg-4 col-md-6'>
+        <div className='card px-5 py-4 mt-5 col-lg-4 col-md-6' onLoad={()=>console.log("ONLOAD")}>
           <div className="card-title">
             <h4 className='text-center'>Cadastre-se gratuitamente </h4>
           </div>
