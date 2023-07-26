@@ -6,7 +6,7 @@ function CardConta({conta}) {
   const {censor} = useContext(ContaContext);
 
   return (
-    <div className='card p-4 card-account' key={conta.codConta} onClick={()=>window.location.href = `/contas/${conta.codConta}/${conta.idUsuario}`}>
+    <div className='card p-4 mb-3 card-account' key={conta.codConta} onClick={()=>window.location.href = `/contas/${conta.codConta}`}>
         <span className='d-flex flex-row justify-content-between'><h5>Conta N°{conta['codConta']}</h5><p>Agência: {conta['agencia']}</p></span>
         <hr></hr>
         <ul>

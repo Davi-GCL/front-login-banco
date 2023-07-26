@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <TelaRestrita/>
       },
       {
-        path:"contas/:idConta/:idUsuario",
+        path:"contas/:idConta",
         element: <TelaContaIndividual/>
       },
       {

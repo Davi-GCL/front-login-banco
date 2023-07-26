@@ -47,14 +47,16 @@ function TelaRestrita() {
         <div className='header'>
           <h4 className='mb-2'>Olá, {dono.current}</h4>
           <p>Selecione a conta que deseja movimentar hoje:</p>
-          <span className='d-flex justify-content-end'><button className='btn btn-primary mb-4 w-10' onClick={(e)=>{setCensor(!censor);}}>Exibir saldos</button></span>
+          <span className='d-flex justify-content-end'><button className='btn btn-primary mb-4 w-10' 
+          onClick={(e)=>{setCensor(!censor);}}>Exibir saldos</button></span>
         </div>
+
         {contas.map((conta)=>{
           if(conta.codConta !== 0){
             return (<CardConta conta={conta}/>)
           }else{ return null }
-        })
-        }
+        })}
+        
       </ContaContext.Provider>
     )
   }else{
