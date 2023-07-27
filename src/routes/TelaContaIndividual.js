@@ -1,5 +1,6 @@
 import React, { useEffect , useState} from 'react'
 import { useParams } from 'react-router-dom'
+import SectionServices from '../comps/SectionServices';
 
 function TelaContaIndividual() {
   const {idConta} = useParams();
@@ -12,14 +13,14 @@ function TelaContaIndividual() {
     let res = await fetch(`https://localhost:7044/Conta/GetById/${idConta}`,{method:'GET'});
   
     setConta( await res.json() );
-    console.log(conta)
+    console.log(conta);
   }
 
   useEffect(()=>{getContaById()},[]);
 
   return(
     <React.Fragment>
-      {conta&& conta.idUsuario == idUsuario? <p>Conta Valida!</p> : <p>Conta INVALIDA!</p>}
+      {conta&& conta.idUsuario == idUsuario? <SectionServices useConta={{conta,setConta}}/> : <p>Conta INVALIDA!</p>}
     </React.Fragment>
   )
 }
