@@ -2,6 +2,7 @@ import React from 'react'
 
 function SectionServices({useConta}) {
   const {conta, setConta} = useConta;
+  
 
   async function handleDeposit(){
     let value = confirmaDeposito(conta);
@@ -13,7 +14,7 @@ function SectionServices({useConta}) {
       })
       .then((res)=>{
         if(!res.ok){
-          throw new Error(res.status + " " + res.statusText)
+          throw new Error(res.status + ": " + res.text())
         }
         return res.json();
       })
@@ -33,26 +34,32 @@ function SectionServices({useConta}) {
     let auxObj = {codConta: conta.codConta, valor: value, senha: pwd}
 
     if(value != 0 && pwd != ""){
-      await fetch(`https://localhost:7044/Transactions/Draw`,{
-        method: 'PUT',
-        headers:{'Content-Type': 'application/json'},
-        body: JSON.stringify(auxObj)
-      })
-      .then((res)=>{
+      try{
+        let res = await fetch(`https://localhost:7044/Transactions/Draw`,{
+          method: 'PUT',
+          headers:{'Content-Type': 'application/json'},
+          body: JSON.stringify(auxObj)
+          });
         if(!res.ok){
-          throw new Error(res.status + " " + res.statusText)
+          let error = await res.text()
+          throw new Error(error)
         }
-        return res.json();
-      })
-      .then((data)=>{
+        let data = await res.json();
+    
         // Lógica para tratar a resposta de sucesso
         console.log(data);
-        // setConta({...conta , ['saldo']:data.result});
-      })
-      .catch((err)=>console.error("Erro no PUT Deposit: " + err)/* Lógica para tratar a resposta de erro*/);
+        setConta({...conta , ['saldo']:data.result});
+      
+      }
+      catch(err){
+        console.error("Erro no PUT Deposit: " + err)/* Lógica para tratar a resposta de erro*/
+        alert(err);
+      }
 
     }
-    
+  }
+  function handleTransfer(){
+    const {value, pwd} = confirmaTransf(conta);
   }
 
   return (
@@ -60,6 +67,7 @@ function SectionServices({useConta}) {
       <h4>{conta.saldo}</h4>
       <button onClick={handleDeposit}>Depositar</button>
       <button onClick={handleDraw}>Sacar</button>
+      <button onClick={handleTransfer}>Transferir</button>
     </div>
   )
 }
@@ -100,6 +108,37 @@ function confirmaSaque(conta){
 
   }while(confirm === false);
   pwd = prompt("Digite o PIN da conta: ")
+  if(pwd == null || pwd == "" || pwd==" "){return {value:0,pwd:""}}
+  
+  return {value: parseFloat(value) , pwd}
+}
+
+function confirmaTransf(conta){
+  let value, receiver, confirm;
+  let pwd = '';
+  do{
+    
+    value = prompt("Digite o valor que deseja transferir: ");
+    if(value == null){return {value:0,pwd:''}}
+    else{value = value.replace(",",".")}
+
+    while(parseFloat(value)==NaN){
+      value = prompt("Valor inválido! Digite um valor válido:").replace(",",".");
+    }
+
+    //Pergunta a conta que ira receber a transferencia:
+    receiver = prompt("Escolha a conta que irá receber: ");
+    if(receiver == null){return {value:0,pwd:''}}//Se for clicado no botão cancelar, retorna null
+    
+
+    while(parseInt(receiver)==NaN){
+      value = prompt("Conta invalida! Digite um número de conta válido:").replace(",",".");
+    }
+
+    confirm = window.confirm(`Deseja transferir ${value} para a conta ${receiver} ?`);
+
+  }while(confirm === false);
+  pwd = prompt("Digite o PIN da conta: ");
   if(pwd == null || pwd == "" || pwd==" "){return {value:0,pwd:""}}
   
   return {value: parseFloat(value) , pwd}
