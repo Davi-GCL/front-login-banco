@@ -8,6 +8,7 @@ import TelaCadastro from './routes/TelaCadastro';
 import TelaRestrita from './routes/TelaRestrita';
 import TelaHome from './routes/TelaHome';
 import TelaContaIndividual from './routes/TelaContaIndividual';
+import TelaRecuperacao from './routes/TelaRecuperacao';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path:"login",
         element: <TelaLogin/>
+      },
+      {
+        path:"recuperacao",
+        element: <TelaRecuperacao/>
       }
     ]
   }

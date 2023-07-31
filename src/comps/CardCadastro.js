@@ -76,7 +76,7 @@ export default function CardCadastro({toNextForm , states}){
   }
 
     return(
-        <div className='card px-5 py-4 mt-5 col-lg-4 col-md-6' onLoad={()=>console.log("ONLOAD")}>
+        <div className='card px-5 py-4 col-lg-4 col-md-6' onLoad={()=>console.log("ONLOAD")}>
           <div className="card-title">
             <h4 className='text-center'>Cadastre-se gratuitamente </h4>
           </div>
@@ -111,9 +111,8 @@ export default function CardCadastro({toNextForm , states}){
 
             <div className="row mb-3">
               <label htmlFor="input-senha" className="form-label h6">PIN:</label>
-              <input type="password" name='input-senha' placeholder='Definir senha de transações na conta' value={form['setSenha']} className="form-control" onChange={({currentTarget}) => setForm({
-                ...form, ['setSenha']: currentTarget.value
-              })}/>
+              <input type="password" name='input-senha' placeholder='Definir senha de transações na conta' value={form['setSenha']} className="form-control" onChange={({currentTarget}) => 
+              {if(currentTarget.value.length <= 4)setForm({...form, ['setSenha']: currentTarget.value})}}/>
               <li className='form-text'>Apenas números</li>
               <li className='form-text'>4 caracteres</li>
             </div>

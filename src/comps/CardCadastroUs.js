@@ -20,7 +20,7 @@ export default function CardCadastroUs({states}){
   },[emailValid, cpfValid, formUser])
 
     return(
-        <div className='card px-5 py-5 mt-5 col-lg-4 col-md-6 position-relative'>
+        <div className='card px-5 py-5 col-lg-4 col-md-6 position-relative'>
           <div className="card-title">
             <h4 className='text-center'>Cadastre-se gratuitamente!</h4>
           </div>

@@ -31,8 +31,8 @@ export default function NavBar() {
         </ul>
         
         <ul className="navbar-nav mb-2 mb-md-0">
-          <li><a className="btn btn-primary me-2"  href="cadastro">Cadastro</a></li>
-          <li><a className="btn btn-primary"  href="login">Login</a></li>
+          <li><a className="btn btn-primary me-2"  href="/cadastro">Cadastro</a></li>
+          <li><a className="btn btn-primary"  href="/login">Login</a></li>
         </ul>
 
       </div>
