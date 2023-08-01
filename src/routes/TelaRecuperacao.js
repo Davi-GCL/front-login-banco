@@ -1,28 +1,41 @@
-import React from 'react'
+import React,{useState, useRef, useEffect} from 'react'
 
 export default function TelaRecuperacao() {
-  // async function handleSubmit() {
+  const [form,setForm] = useState({
+    cpf:"",
+    email:"",
+    senha:""
+  });
+  const [valid, setValid] = useState({
+    cpf:false,
+    email:false,
+    senha:false
+  })
+  const [confSenha, setConfSenha] = useState('');
 
-  //   fetch('https://localhost:7044/Usuario/Auth', {
-  //     method: 'POST',
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify(formLogin)
-  //   })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log(data);
+  async function handleSubmit() {
 
-  //     if(data.valid == true){
-  //       setAlerta([<div className='alert alert-info'>Autenticado com sucesso!</div>]);
-  //       localStorage.setItem('loginId',data.id.toString());
+    fetch('https://localhost:7044/Usuario/Update/Password', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(form)
+    })
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log(data);
+    // })
+    .catch(err => console.log(err));
+  }
 
-  //       window.location.href="/contas";
-  //     }else{
-  //       setAlerta([<div className='alert alert-danger'>CPF ou senha incorretos!</div>]);
-  //     }
-  //   })
-  //   .catch(err => console.log(err));
-  // }
+  useEffect(()=>{
+    if(form.senha != confSenha || form.senha == ''){
+      console.log("senhas nao conferem")
+      setValid({...valid, ['senha']:false})
+    }else{
+      console.log("senhas conferem!")
+      setValid({...valid, ['senha']:true})
+    }
+  },[form.senha , confSenha])
 
 // --------------------------------------- Código JSX ----------------------------------------------------------
   return (
@@ -33,20 +46,26 @@ export default function TelaRecuperacao() {
           <div className='card-body'>
             <div className="row mb-3">
               <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
-              <input type="text" name='input-cpf' className="form-control"/>
+              <input type="text" name='input-cpf' className="form-control" onChange={({currentTarget})=>{setForm({...form, ['cpf']:currentTarget.value})}}/>
             </div>
             <div className="row mb-3">
               <label htmlFor="input-email" className="form-label h6">Email:</label>
-              <input type="text" name='input-email' className="form-control"/>
+              <input type="text" name='input-email' className="form-control" onChange={({currentTarget})=>{setForm({...form, ['email']:currentTarget.value})}}/>
             </div>
 
             <div className="row mb-3">
-              <label htmlFor="input-senha" className="form-label h6">Senha:</label>
-              <input type="password" name='input-senha' className="form-control"/>
+              <label htmlFor="input-senha" className="form-label h6">Nova Senha:</label>
+              <input type="password" name='input-senha' className="form-control" onChange={({currentTarget})=>{setForm({...form, ['senha']:currentTarget.value})}}/>
             </div>
             
+            <div className="row mb-3">
+              <label htmlFor="input-senha" className="form-label h6">Confirmar Senha:</label>
+              <input type="password" name='input-senha' className="form-control" onChange={({currentTarget})=>{setConfSenha(currentTarget.value)}}/>
+              <p>{valid.senha == false? "As senhas não conferem!": ''}</p>
+            </div>
+
             <div className="button-area row mt-4">
-              <button type="submit" className='btn btn-primary w-100'>Confirmar</button>
+              <button type="submit" className={`btn btn-primary w-100 ${form.cpf && form.email && valid.senha==true? '':'disabled'}`} onClick={handleSubmit}>Confirmar</button>
             </div>
           </div>
     </div>
