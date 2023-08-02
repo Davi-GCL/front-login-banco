@@ -1,7 +1,7 @@
 import React, { useEffect , useState} from 'react'
 import { useParams } from 'react-router-dom'
 import SectionServices from '../comps/SectionServices';
-
+import SectionExtract from '../comps/SectionExtract';
 function TelaContaIndividual() {
   const {idConta} = useParams();
   const idUsuario = localStorage.getItem('loginId')
@@ -18,9 +18,16 @@ function TelaContaIndividual() {
 
   useEffect(()=>{getContaById()},[]);
 
+  const Render = ()=>{
+    if(conta&& conta.idUsuario == idUsuario){ 
+      return (<div><SectionServices useConta={{conta,setConta}}/><SectionExtract codConta={conta.codConta}/></div>) 
+    }else{ 
+      return<p>Conta INVALIDA!</p>
+    }
+  }
   return(
     <React.Fragment>
-      {conta&& conta.idUsuario == idUsuario? <SectionServices useConta={{conta,setConta}}/> : <p>Conta INVALIDA!</p>}
+      <Render/>
     </React.Fragment>
   )
 }
