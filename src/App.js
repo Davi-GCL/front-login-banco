@@ -3,7 +3,7 @@
 // X-Verificar se o cpf ou email inseridos já estão registrados no banco de dados;
 // X-O campo de cadastrar senha para a conta possui requisitos que devem ser cumpridos: quantidade de caracteres;
 // X-Opcao de mudar a senha na tela de login;
-// -Seção exibindo o extrato das movimentações
+// X-Seção exibindo o extrato das movimentações
 // -Mecanismo de pagar conta, inserindo o codigo do boleto;
 // -Exibir um relatorio com informações, após uma transação de saque ou transferencia;
 /* -Criar o sistema de cartao da conta, onde em uma conta poupança o cartão será do tipo débito, e em conta corrente, será do tipo crédito:

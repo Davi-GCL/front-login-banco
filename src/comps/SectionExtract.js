@@ -1,21 +1,48 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 
 export default function SectionExtract({codConta}) {
     const [extracts, setExtracts] = useState([{}])
+    const [limit, setLimit] = useState(5);
 
-    async function handleGet(){
+    const types = {'1':'Depósito' , '2':'Saque' , '3':'Transferência'} //Dictionary para converter o valor de um tipo no nome dele
+
+    useEffect(()=>{
+        getExtracts();
+    },[]);
+
+    async function getExtracts(){
+        // await new Promise(r => setTimeout(r, 4000));
+        
         fetch(`https://localhost:7044/Mov/GetListByIdConta/${codConta}`)
         .then((res)=>res.json())
         .then((data)=>{
-            setExtracts(data)
+            setExtracts(data.map((x)=>{return{...x , ['dataHora']:convertDateTime(x.dataHora)} }) );
+            
         })
         .catch((err)=>console.error(err))
     }
 
     return (
-        <div className='card'>
-            <button onClick={handleGet}>Get</button>
-            {extracts.map((extract)=>(<div className='alert alert-primary'>{extract.tipo} {extract.valor} {extract.dataHora}</div>))}
+        <div className='card p-4 mt-4'>
+            <h4 className='mb-4'>Últimas movimentações</h4>
+            {extracts.map((extract)=>(
+                <div className='alert alert-light d-grid'>
+                    <div className='d-flex justify-content-between'><h5 className='alert-heading'>{types[extract.tipo]}</h5> 
+                    <h5>R${extract.valor}</h5></div>
+                    <hr></hr> 
+                    <p style={{justifySelf:'end',margin:'0px'}}>{extract.dataHora}</p>
+                </div>
+            )).reverse().splice(0,limit)}
+            <button onClick={()=>setLimit(limit>5? 5 : 10)}>...</button>
         </div>
     )
+}
+
+function convertDateTime(dateTime){
+    
+    let [year, month, date] = dateTime.split('-');
+    let [day, time] = date.split('T');
+
+    // let newDateTime = new Date(``)
+    return `${day}/${month}/${year}`
 }
