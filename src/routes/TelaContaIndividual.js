@@ -19,10 +19,14 @@ function TelaContaIndividual() {
   useEffect(()=>{getContaById()},[]);
 
   const Render = ()=>{
-    if(conta&& conta.idUsuario == idUsuario){ 
-      return (<div><SectionServices useConta={{conta,setConta}}/><SectionExtract codConta={conta.codConta}/></div>) 
-    }else{ 
-      return<p>Conta INVALIDA!</p>
+    if(conta){
+      if(conta.idUsuario == idUsuario){ 
+        return (<div><SectionServices useConta={{conta,setConta}}/><SectionExtract codConta={conta.codConta}/></div>) 
+      }else{ 
+        return<p>Conta INVALIDA!</p>
+      }
+    }else{
+      return<h4>Carregando...</h4>
     }
   }
   return(
