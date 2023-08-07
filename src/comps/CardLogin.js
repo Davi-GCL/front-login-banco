@@ -1,9 +1,8 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 
+
 export default function CardLogin({alerta, setAlerta}){
-
-
   const [formLogin, setFormLogin] = useState({
     senha:'',
     cpf: ''
@@ -12,25 +11,31 @@ export default function CardLogin({alerta, setAlerta}){
 
   async function handleSubmit() {
 
-    fetch('https://localhost:7044/Usuario/Auth', {
+    fetch('https://localhost:7044/Auth/LoginUsuario', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(formLogin)
     })
-    .then((response) => response.json())
+    .then((response) => {
+      if(!response.ok){
+        throw new Error(response.status + ": " + response.statusText)
+      }
+      return response.json();
+    })
     .then((data) => {
       console.log(data);
-
-      if(data.valid == true){
+      
         setAlerta([<div className='alert alert-info'>Autenticado com sucesso!</div>]);
         localStorage.setItem('loginId',data.id.toString());
+        localStorage.setItem('token', data.token.toString());
 
         window.location.href="/contas";
-      }else{
-        setAlerta([<div className='alert alert-danger'>CPF ou senha incorretos!</div>]);
-      }
+      
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err)
+      setAlerta([<div className='alert alert-danger'>CPF ou senha incorretos!</div>]);
+    });
   }
 
 // --------------------------------------- Código JSX ----------------------------------------------------------

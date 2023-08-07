@@ -10,6 +10,8 @@ import TelaHome from './routes/TelaHome';
 import TelaContaIndividual from './routes/TelaContaIndividual';
 import TelaRecuperacao from './routes/TelaRecuperacao';
 
+// import { GlobalContext, GlobalProvider } from './context/GlobalContext';
+
 const router = createBrowserRouter([
   {
     path:"/",
@@ -41,12 +43,12 @@ const router = createBrowserRouter([
       }
     ]
   }
-])
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+      <RouterProvider router={router}/>
   </React.StrictMode>
 );
 

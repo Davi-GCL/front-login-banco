@@ -16,23 +16,26 @@
 // -(Requisito N-F) Ao apertar Enter no campo de senha, o formulario de login será enviado, assim como quando se pressiona o botao de Login;
 
 import React from "react";
-import {useEffect, useState} from "react";
+import {useEffect, useState, createContext} from "react";
 import './App.css';
 
 import { Outlet } from "react-router-dom";
 import NavBar from "./comps/NavBar";
 
+export const GlobalContext = createContext(); 
 
 function App() {
-
+  const {loginInfo, setLoginInfo} = useState(""); 
   return (
     <React.Fragment>
-    <NavBar/>
-    <div className="container w-100">
-      <div className='row mt-5 justify-content-center'>
-        <Outlet />
-      </div>
-    </div>
+      <GlobalContext.Provider value={{loginInfo, setLoginInfo}}>
+        <NavBar/>
+        <div className="container w-100">
+          <div className='row mt-5 justify-content-center'>
+            <Outlet />
+          </div>
+        </div>
+      </GlobalContext.Provider>
     </React.Fragment>
   );
 }
