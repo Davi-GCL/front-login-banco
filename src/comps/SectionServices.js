@@ -1,4 +1,5 @@
 import React from 'react'
+import '../compsStyles.css'
 
 function SectionServices({useConta}) {
   const token = localStorage.getItem('token');
@@ -98,9 +99,11 @@ function SectionServices({useConta}) {
   return (
     <div>
       <h4>R${conta.saldo}</h4>
-      <button onClick={handleDeposit}>Depositar</button>
-      <button onClick={handleDraw}>Sacar</button>
-      <button onClick={handleTransfer}>Transferir</button>
+      <div className='d-flex justify-content-around w-50'>
+      <button className='btn-services' onClick={handleDeposit}><i class="bi bi-download"></i>Depositar</button>
+      <button className='btn-services' onClick={handleDraw}><i class="bi bi-upload"></i>Sacar</button>
+      <button className='btn-services' onClick={handleTransfer}><i class="bi bi-cursor"></i>Transferir</button>
+      </div>
     </div>
   )
 }
@@ -178,3 +181,9 @@ function confirmaTransf(conta){
 }
 
 export default SectionServices
+
+const styles = {
+  btn:{
+    backgroundColor: 'blue'
+  }
+}

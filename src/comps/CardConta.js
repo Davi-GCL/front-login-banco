@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import { ContaContext } from '../routes/TelaRestrita';
+import { ContaContext } from '../routes/TelaLogada';
 import '../App.css';
 
 function CardConta({conta}) {

@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import App from './App';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import TelaLogin from './routes/TelaLogin';
 import TelaCadastro from './routes/TelaCadastro';
-import TelaRestrita from './routes/TelaRestrita';
+import TelaLogada, {TelaRestrita} from './routes/TelaLogada';
 import TelaHome from './routes/TelaHome';
 import TelaContaIndividual from './routes/TelaContaIndividual';
 import TelaRecuperacao from './routes/TelaRecuperacao';
@@ -16,16 +17,8 @@ const router = createBrowserRouter([
     element: <App />,
     children:[
       {
-        path:"home",
+        path:"",
         element: <TelaHome/>
-      },
-      {
-        path:"contas",
-        element: <TelaRestrita/>
-      },
-      {
-        path:"contas/:idConta",
-        element: <TelaContaIndividual/>
       },
       {
         path:"cadastro",
@@ -40,7 +33,22 @@ const router = createBrowserRouter([
         element: <TelaRecuperacao/>
       }
     ]
+  },
+  {
+    path:"contas",
+    element: <TelaLogada/>,
+    children:[
+      {
+        path:"",
+        element: <TelaRestrita/>
+      },
+      {
+        path:":idConta",
+        element: <TelaContaIndividual/>
+      }
+    ]
   }
+
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,14 +1,37 @@
-import React, { useState, useEffect, createContext, useRef } from 'react'
+import React, { useState, useEffect, createContext, useRef, useContext } from 'react'
+import { Outlet } from 'react-router-dom';
+import { LoggedNavBar} from '../comps/NavBar';
 import CardConta from '../comps/CardConta';
+import useLocalStorage from '../useLocalStorage';
 
 
 export const ContaContext = createContext(); 
 
-function TelaRestrita() {
+export default function TelaLogada() {
+  const [censor, setCensor] = useState(true); //Estado que comanda se os valores serão exibidos ou ocultos
+  const [loginInfo, setLoginInfo] = useLocalStorage('loginInfo','')
+
+
+  return (
+    <React.Fragment>
+      <ContaContext.Provider value={{censor, setCensor,loginInfo,setLoginInfo}}>
+      <LoggedNavBar/>
+      <div className="container w-100">
+        <div className='row mt-5 justify-content-center'>
+          <Outlet />
+        </div>
+      </div>
+      </ContaContext.Provider>
+    </React.Fragment>
+  )
+}
+
+export function TelaRestrita() {
+  const {censor, setCensor, loginInfo, setLoginInfo} = useContext(ContaContext);
   const id = localStorage.getItem('loginId');
   const token = localStorage.getItem('token');
   const dono = useRef('');
-  const [censor, setCensor] = useState(true); //Estado que comanda se os valores serão exibidos ou ocultos
+
   const [contas,setContas] = useState([{
     codConta: 0,
     agencia: '',
@@ -35,7 +58,8 @@ function TelaRestrita() {
         username = e.idUsuarioNavigation.nome;
       }  
     });
-    localStorage.setItem("username", username);
+    // localStorage.setItem("username", username);
+    setLoginInfo(username);
     setContas(dataArr);
   }
 
@@ -46,9 +70,9 @@ function TelaRestrita() {
 
   if(id){
     return (
-      <ContaContext.Provider value={{censor}}>
+      <React.Fragment>
         <div className='header'>
-          <h4 className='mb-2'>Olá, {dono.current}</h4>
+          <h4 className='mb-2'>Olá, {loginInfo}</h4>
           <p>Selecione a conta que deseja movimentar hoje:</p>
           <span className='d-flex justify-content-end'><button className='btn btn-primary mb-4 w-10' 
           onClick={(e)=>{setCensor(!censor);}}>Exibir saldos</button></span>
@@ -60,7 +84,7 @@ function TelaRestrita() {
           }else{ return null }
         })}
         
-      </ContaContext.Provider>
+      </React.Fragment>
     )
   }else{
     return (<div>
@@ -70,4 +94,3 @@ function TelaRestrita() {
   }
 }
 
-export default TelaRestrita
