@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function NavBar() {
+  const [username, setUsername] = useState();
+
+  useEffect(()=>{
+    if(window.location.href.includes('/contas')){
+      setUsername(localStorage.getItem('username'))
+
+    }
+  })
+
   return (
     <nav className="navbar navbar-expand-md navbar-dark sticky-top shadow p-2" aria-label="Fourth navbar example" style={{zIndex:100 , backgroundColor:'darkorange'}}>
     <div className="container-fluid">
@@ -31,6 +40,7 @@ export default function NavBar() {
         </ul>
         
         <ul className="navbar-nav mb-2 mb-md-0">
+          <li>{username}</li>
           <li><a className="btn btn-primary me-2"  href="/cadastro">Cadastro</a></li>
           <li><a className="btn btn-primary"  href="/login">Login</a></li>
         </ul>

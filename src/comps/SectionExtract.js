@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 
 export default function SectionExtract({codConta}) {
+    const token = localStorage.getItem('token')
     const [extracts, setExtracts] = useState([{}])
     const [limit, setLimit] = useState(5);
 
@@ -13,7 +14,7 @@ export default function SectionExtract({codConta}) {
     async function getExtracts(){
         // await new Promise(r => setTimeout(r, 4000));
         
-        fetch(`https://localhost:7044/Mov/GetListByIdConta/${codConta}`)
+        fetch(`https://localhost:7044/Mov/GetListByIdConta/${codConta}`,{method: 'GET', headers:{'Authorization': `Bearer ${token}`}})
         .then((res)=>res.json())
         .then((data)=>{
             setExtracts(data.map((x)=>{return{...x , ['dataHora']:convertDateTime(x.dataHora)} }) );

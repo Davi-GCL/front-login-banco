@@ -6,6 +6,7 @@ export const ContaContext = createContext();
 
 function TelaRestrita() {
   const id = localStorage.getItem('loginId');
+  const token = localStorage.getItem('token');
   const dono = useRef('');
   const [censor, setCensor] = useState(true); //Estado que comanda se os valores serão exibidos ou ocultos
   const [contas,setContas] = useState([{
@@ -20,19 +21,21 @@ function TelaRestrita() {
   async function handleGet(){
     let res = await fetch(`https://localhost:7044/Conta/`, {
       method: 'GET',
+      headers: {'Authorization': `Bearer ${token}`}
     })
     let data = await res.json()
     
     console.log(data);
     
     let dataArr = [];
-
+    var username;
     data.forEach(e => {
       if(e.idUsuario == id){
         dataArr.push({['codConta']:e.codConta, ['agencia']:e.agencia,['saldo']:e.saldo , ['tipo']:e.tipo , ['idUsuario']:e.idUsuario});
-        dono.current = e.idUsuarioNavigation.nome;
+        username = e.idUsuarioNavigation.nome;
       }  
     });
+    localStorage.setItem("username", username);
     setContas(dataArr);
   }
 

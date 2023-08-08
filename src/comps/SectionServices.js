@@ -1,6 +1,7 @@
 import React from 'react'
 
 function SectionServices({useConta}) {
+  const token = localStorage.getItem('token');
   const {conta, setConta} = useConta;
   
 
@@ -10,7 +11,7 @@ function SectionServices({useConta}) {
     if(value != 0){
       await fetch(`https://localhost:7044/Transactions/Deposit?id=${conta.codConta}&value=${value}`,{
         method: 'PUT',
-        headers:{'Content-Type': 'text/plain'}
+        headers:{'Content-Type': 'text/plain' , 'Authorization': `Bearer ${token}`}
       })
       .then((res)=>{
         if(!res.ok){
@@ -37,7 +38,7 @@ function SectionServices({useConta}) {
       try{
         let res = await fetch(`https://localhost:7044/Transactions/Draw`,{
           method: 'PUT',
-          headers:{'Content-Type': 'application/json'},
+          headers:{'Content-Type': 'application/json' , 'Authorization': `Bearer ${token}`},
           body: JSON.stringify(bodyObj)
           });
         if(!res.ok){
@@ -70,7 +71,7 @@ function SectionServices({useConta}) {
       try{
         let res = await fetch(`https://localhost:7044/Transactions/Transfer`,{
           method: 'PUT',
-          headers:{'Content-Type': 'application/json'},
+          headers:{'Content-Type': 'application/json' , 'Authorization': `Bearer ${token}`},
           body: JSON.stringify(bodyObj)
           });
         if(!res.ok){
