@@ -1,17 +1,49 @@
+.btn-area{
+    display: flex;
+    width: 340px;
+    height: 53px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 17px;
+    flex-shrink: 0;
+}
 .btn-services{
     border-radius: 6px;
     border: 1px solid var(--banco-primary, #FF8C00);
     background: #FFF;
 
     display: flex;
-    width: 70px;
-    height: 53px;
-    padding: 7px;
+    width: 73px;
+    height: 59px;
+    padding: 10px;
     align-items: flex-start;
-    align-content: flex-start;
+    align-content: center;
     gap: 6px;
     flex-shrink: 0;
     flex-wrap: wrap;
 
     font-size: 12px;
+    line-height: normal;
+    color:#FF8C00;
 }
+
+.btn-services>i{
+    font-size: 17px;
+    flex-shrink: 0;
+}
+
+.container-transactions{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.card-services{
+    width: 467px;
+}
+
+.card-extract{
+    width: 467px;
+}
+

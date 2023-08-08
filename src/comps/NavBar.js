@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { ContaContext } from '../routes/TelaLogada';
+import useLocalStorage from '../useLocalStorage';
 
 export default function NavBar() {
+  const [loginInfo, setLoginInfo] = useLocalStorage('loginInfo', '');
+
 
   return (
     <nav className="navbar navbar-expand-md navbar-dark sticky-top shadow p-2" aria-label="Fourth navbar example" style={{zIndex:100 , backgroundColor:'darkorange'}}>
@@ -32,10 +35,17 @@ export default function NavBar() {
           </li> */}
         </ul>
         
-        <ul className="navbar-nav mb-2 mb-md-0">
-          <li><a className="btn btn-primary me-2"  href="/cadastro">Cadastro</a></li>
-          <li><a className="btn btn-primary"  href="/login">Login</a></li>
-        </ul>
+        {loginInfo == ''? (
+          <ul className="navbar-nav mb-2 mb-md-0">
+            <li><a className="btn btn-primary me-2"  href="/cadastro">Cadastrar-se</a></li>
+            <li><a className="btn btn-primary"  href="/login">Entrar</a></li>
+          </ul>
+        ):(
+          <ul className="navbar-nav mb-2 mb-md-0">
+            <li><a className="nav-link active me-2"  href="#">{loginInfo}</a></li>
+            <li><a className="btn btn-primary"  onClick={()=>{localStorage.clear(); window.location.href = '/login'}}>Sair</a></li>
+          </ul>
+        )}
 
       </div>
     </div>
@@ -82,12 +92,17 @@ export function LoggedNavBar() {
             </ul>
           </li> */}
         </ul>
-        
+        {loginInfo == '' || loginInfo == null? (
+        <ul className="navbar-nav mb-2 mb-md-0">
+          <li><a className="btn btn-primary me-2"  href="/cadastro">Cadastro</a></li>
+          <li><a className="btn btn-primary"  href="/login">Entrar</a></li>
+        </ul>) : (
         <ul className="navbar-nav mb-2 mb-md-0">
           <li><a className="nav-link active me-2"  href="#">{loginInfo}</a></li>
-          <li><a className="btn btn-primary"  onClick={()=>setLoginInfo('')}>Sair</a></li>
-        </ul>
-
+          <li><a className="btn btn-primary"  onClick={()=>{localStorage.clear(); window.location.href = '/login'}}>Sair</a></li>
+        </ul>)
+        }
+        
       </div>
     </div>
   </nav>

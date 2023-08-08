@@ -1,9 +1,12 @@
-import React, { useEffect , useState} from 'react'
+import React, { useContext, useEffect , useState} from 'react'
 import { useParams } from 'react-router-dom'
 import SectionServices from '../comps/SectionServices';
 import SectionExtract from '../comps/SectionExtract';
+import { ContaContext } from './TelaLogada';
+
 
 function TelaContaIndividual() {
+  const {censor, setCensor} = useContext(ContaContext);
   const {idConta} = useParams();
   const idUsuario = localStorage.getItem('loginId');
   const token = localStorage.getItem('token');
@@ -20,22 +23,25 @@ function TelaContaIndividual() {
 
   useEffect(()=>{getContaById()},[]);
 
-  const Render = ()=>{
-    if(conta){
-      if(conta.idUsuario == idUsuario){ 
-        return (<div><SectionServices useConta={{conta,setConta}}/><SectionExtract codConta={conta.codConta}/></div>) 
-      }else{ 
-        return<p>Conta INVALIDA!</p>
-      }
-    }else{
-      return<h4>Carregando...</h4>
+  // const Render = ()=>{
+    
+  // }
+
+  if(conta){
+    if(conta.idUsuario == idUsuario){ 
+      return (
+      <div className='container-transactions'>
+        <SectionServices useConta={{conta,setConta}} useCensor={{censor, setCensor}}/>
+        <SectionExtract codConta={conta.codConta}/>
+      </div>
+      ) 
+    }else{ 
+      return<p>Conta INVALIDA!</p>
     }
+  }else{
+    return<h4>Carregando...</h4>
   }
-  return(
-    <React.Fragment>
-      <Render/>
-    </React.Fragment>
-  )
+
 }
 
 export default TelaContaIndividual

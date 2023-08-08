@@ -1,8 +1,10 @@
 import React from 'react'
 import '../compsStyles.css'
+import '../App.css'
 
-function SectionServices({useConta}) {
+function SectionServices({useConta , useCensor}) {
   const token = localStorage.getItem('token');
+  const {censor, setCensor} = useCensor;
   const {conta, setConta} = useConta;
   
 
@@ -97,12 +99,14 @@ function SectionServices({useConta}) {
   }
 
   return (
-    <div>
-      <h4>R${conta.saldo}</h4>
-      <div className='d-flex justify-content-around w-50'>
-      <button className='btn-services' onClick={handleDeposit}><i class="bi bi-download"></i>Depositar</button>
-      <button className='btn-services' onClick={handleDraw}><i class="bi bi-upload"></i>Sacar</button>
-      <button className='btn-services' onClick={handleTransfer}><i class="bi bi-cursor"></i>Transferir</button>
+    <div className='card p-4 mt-4 card-services'>
+      <h4 className='mb-4'>Saldo <i class="bi bi-eye ms-3" onClick={()=>setCensor(!censor)}></i></h4>
+      {/* <p className="text-secondary my-0">Seu saldo:</p> */}
+      <h4 className={`mb-4 fw-normal ${censor? 'text-censor' : 'text'}`}>R${conta.saldo}</h4>
+      <div className='btn-area' >
+        <button className='btn-services' onClick={handleDeposit}><i class="bi bi-download"></i>Depositar</button>
+        <button className='btn-services' onClick={handleDraw}><i class="bi bi-upload"></i>Sacar</button>
+        <button className='btn-services' onClick={handleTransfer}><i class="bi bi-cursor"></i>Transferir</button>
       </div>
     </div>
   )

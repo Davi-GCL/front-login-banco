@@ -30,10 +30,16 @@ export default function CardCadastroUs({states}){
             <div className="row mb-3">
                 <div className='col p-0'>
                   <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
-                  <input type="text" name='input-name' className="form-control" placeholder=' Ex: 123.456.789-10' value={formUser['cpf']} 
-                  onChange={({currentTarget}) => setFormUser({ ...formUser, ['cpf']: currentTarget.value })} 
-                  onBlur={({currentTarget}) =>validarCPF(currentTarget.value, setCpfValid)}
-                  required/>
+                  <input type="text" name="input-name" className="form-control" placeholder="Ex: 123.456.789-10" value={formUser['cpf']}
+                      onChange={({ currentTarget }) => {
+                        const formattedValue = currentTarget.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                        const maskedValue = formattedValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                        setFormUser({ ...formUser, ['cpf']: maskedValue });
+                      }}
+                      onBlur={({ currentTarget }) => validarCPF(currentTarget.value, setCpfValid)}
+                      required
+                    />
+
                   <span class="form-text text-danger">{cpfValid == false?'CPF invalido':''} </span>
                   <span class="form-text text-danger">{dataExist.cpf == true?'CPF já cadastrado':''} </span>
                 </div>
@@ -63,7 +69,15 @@ export default function CardCadastroUs({states}){
                 <div className='col p-0'>
                     <label htmlFor="input-tel" className="form-label h6">Telefone:</label>
                     <input type="text" name='input-tel' className="form-control" placeholder=" Ex: (DDD) 123456789" value={formUser['telefone']} 
-                    onChange={({currentTarget}) => setFormUser({ ...formUser, ['telefone']: currentTarget.value })} required/>
+                    onChange={({ currentTarget }) => {
+                      const formattedValue = currentTarget.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                      if (formattedValue.length <= 10) {
+                        const maskedValue = formattedValue.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                        setFormUser({ ...formUser, ['telefone']: maskedValue });
+                      } else {
+                        const maskedValue = formattedValue.replace(/(\d{2})(\d{1})(\d{4})(\d{4})/, '($1) $2 $3-$4');
+                        setFormUser({ ...formUser, ['telefone']: maskedValue });
+                      }}} required/>
                     <span class="form-text text-danger">{dataExist.telefone == true?'Telefone já cadastrado!':''} </span>
                 </div>
             </div>

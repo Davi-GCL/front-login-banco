@@ -45,12 +45,18 @@ export default function CardLogin({alerta, setAlerta}){
           <div className="card-title">
             <h4 className='text-center'>Acesse sua conta</h4>
           </div>
+          
           <div className='card-body'>
             <div className="row mb-3">
               <label htmlFor="input-cpf" className="form-label h6">CPF:</label>
-              <input type="text" name='input-cpf' className="form-control" onChange={({currentTarget}) => setFormLogin({
-                ...formLogin, ['cpf']: currentTarget.value
-              })}/>
+              <input type="text" name="input-name" className="form-control" placeholder="Ex: 123.456.789-10" 
+              value={formLogin['cpf']} 
+              onChange={({ currentTarget }) => {
+                        const formattedValue = currentTarget.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                        const maskedValue = formattedValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                        setFormLogin({ ...formLogin, ['cpf']: maskedValue });
+                      }}
+              required/>
             </div>
             
 

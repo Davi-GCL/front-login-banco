@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useRef, useContext } from 'react'
 import { Outlet } from 'react-router-dom';
-import { LoggedNavBar} from '../comps/NavBar';
+import { LoggedNavBar } from '../comps/NavBar';
 import CardConta from '../comps/CardConta';
 import useLocalStorage from '../useLocalStorage';
 

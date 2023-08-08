@@ -24,8 +24,8 @@ export default function SectionExtract({codConta}) {
     }
 
     return (
-        <div className='card p-4 mt-4'>
-            <h4 className='mb-4'>Últimas movimentações</h4>
+        <div className='card p-4 mt-4 card-extract'>
+            <h4 className='mb-4'>Últimas transações</h4>
             {extracts.map((extract)=>(
                 <div className='alert alert-light d-grid'>
                     <div className='d-flex justify-content-between'><h5 className='alert-heading'>{types[extract.tipo]}</h5> 
