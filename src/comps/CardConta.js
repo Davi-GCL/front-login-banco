@@ -1,12 +1,14 @@
 import React, {useState, useContext} from 'react';
 import { ContaContext } from '../routes/TelaLogada';
 import '../App.css';
+import { useNavigate } from 'react-router-dom';
 
 function CardConta({conta}) {
   const {censor} = useContext(ContaContext);
+  const navigate = useNavigate();
 
   return (
-    <div className='card p-4 mb-3 card-account' key={conta.codConta} onClick={()=>window.location.href = `/contas/${conta.codConta}`}>
+    <div className='card p-4 mb-3 card-account' key={conta.codConta} onClick={()=>navigate(`/contas/${conta.codConta}`)}>
         <span className='d-flex flex-row justify-content-between'><h5>Conta N°{conta['codConta']}</h5><p>Agência: {conta['agencia']}</p></span>
         <hr></hr>
         <ul>
@@ -19,3 +21,5 @@ function CardConta({conta}) {
 }
 
 export default CardConta
+
+//window.location.href = `/contas/${conta.codConta}`

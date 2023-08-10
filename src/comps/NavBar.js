@@ -42,7 +42,7 @@ export default function NavBar() {
           </ul>
         ):(
           <ul className="navbar-nav mb-2 mb-md-0">
-            <li><a className="nav-link active me-2"  href="#">{loginInfo}</a></li>
+            <li><a className="nav-link active me-2"  href="/contas">{loginInfo}</a></li>
             <li><a className="btn btn-primary"  onClick={()=>{localStorage.clear(); window.location.href = '/login'}}>Sair</a></li>
           </ul>
         )}
@@ -98,7 +98,7 @@ export function LoggedNavBar() {
           <li><a className="btn btn-primary"  href="/login">Entrar</a></li>
         </ul>) : (
         <ul className="navbar-nav mb-2 mb-md-0">
-          <li><a className="nav-link active me-2"  href="#">{loginInfo}</a></li>
+          <li><a className="nav-link active me-2"  href="/contas">{loginInfo}</a></li>
           <li><a className="btn btn-primary"  onClick={()=>{localStorage.clear(); window.location.href = '/login'}}>Sair</a></li>
         </ul>)
         }
