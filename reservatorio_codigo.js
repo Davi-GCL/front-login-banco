@@ -50,3 +50,35 @@
 //     })
 //     .catch(err => console.log(err));
 //   }
+
+
+// --------------------------- Tela Restrita fetch -------------------------
+
+/*async function handleGet(){
+    let res = await fetch(`https://localhost:7044/Conta/`, {
+      method: 'GET',
+      headers: {'Authorization': `Bearer ${token}`}
+    })
+    let data = await res.json()
+    
+    console.log(data);
+    
+    let dataArr = [];
+    var username;
+    data.forEach(e => {
+      if(e.idUsuario == id){
+        dataArr.push({['codConta']:e.codConta, ['agencia']:e.agencia,['saldo']:e.saldo , ['tipo']:e.tipo , ['idUsuario']:e.idUsuario});
+        username = e.idUsuarioNavigation.nome;
+      }  
+    });
+    // localStorage.setItem("username", username);
+    setLoginInfo(username);
+    setContas(dataArr);
+  }
+  
+    //Algoritmo para que faz a função de buscar dados na api só seja executada uma vez:
+  useEffect(() => {
+    handleGet();
+  }, []); // A lista de dependências vazia indica que o efeito será executado apenas uma vez, após a montagem do componente.
+  
+  */
