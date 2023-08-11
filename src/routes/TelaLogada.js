@@ -61,11 +61,35 @@ export function TelaRestrita() {
     // localStorage.setItem("username", username);
     setLoginInfo(username);
     setContas(dataArr);
+    return username;
   }
 
   //Algoritmo para que faz a função de buscar dados na api só seja executada uma vez:
   useEffect(() => {
-    handleGet();
+    var aux = [];
+    var shortName = '';
+    handleGet().then((res)=>{
+      
+      aux = res.split(' ');
+      var aux2 = aux.map((e,index)=>{
+        //Filtra os artigos('do', 'da') do nome
+        if(e.length > 2){
+          //Se nao for a primeira palavra ou a penultima
+          if(index >= 1 && index < aux.length-1){
+            return e.slice(0,1).toUpperCase();
+          }else{
+            return e; //se for o primeiro nome ou o 
+          }
+        }else{return ' '}
+      });
+      alert(aux2 )
+      aux2.forEach((a)=>{
+        shortName += a+' ';
+      })
+
+      setLoginInfo(shortName);
+    });
+
   }, []); // A lista de dependências vazia indica que o efeito será executado apenas uma vez, após a montagem do componente.
 
   if(id){

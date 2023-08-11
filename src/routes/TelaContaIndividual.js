@@ -20,7 +20,6 @@ function TelaContaIndividual() {
     tipo: 0,
     idUsuario: 0
   }])
-  
 
 
   async function getContas(){
@@ -59,18 +58,21 @@ function TelaContaIndividual() {
   useEffect(()=>{
     getContas();
     getContaById();
+    
   },[]);
 
-  // const Render = ()=>{
-    
-  // }
 
   if(conta){
     if(conta.idUsuario == idUsuario){ 
       return (
-      <div className='container-transactions position-relative'>
-        <DropDownMenu contas={contas}/>
-        <SectionServices useConta={{conta,setConta}} useCensor={{censor, setCensor}}/>
+      <div className='container-transactions position-relative mt-4'>
+        <div>
+          <div className="position-absolute d-flex justify-space-between header-conta" style={{zIndex:10, top:-40}}>
+            <h4 className='fw-light'>{loginInfo}</h4>
+            <DropDownMenu contas={contas} current={idConta}/>
+          </div>
+          <SectionServices useConta={{conta,setConta}} useCensor={{censor, setCensor}}/>
+        </div>
         <SectionExtract codConta={conta.codConta}/>
       </div>
       ) 
