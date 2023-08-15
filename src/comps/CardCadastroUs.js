@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {useState, useEffect} from 'react';
 
@@ -86,7 +87,8 @@ export default function CardCadastroUs({states}){
               <div className='col p-0'>
                 <label htmlFor="input-senha" className="form-label h6 p-0">Senha:</label>
                 <input type="password" name='input-senha' className="form-control" placeholder="Defina a senha de acesso ao sistema" value={formUser['setSenha']} 
-                onChange={({currentTarget}) => setFormUser({ ...formUser, ['setSenha']: currentTarget.value })} required/>
+                onChange={({currentTarget}) => setFormUser({ ...formUser, ['setSenha']: currentTarget.value })}
+                onKeyUp={(e)=>{if(e.key=='Enter' && disableBtn==false){document.getElementById('btn-next').focus()}}} required/>
               </div>
             </div> 
               {/* <div className="row mb-3">

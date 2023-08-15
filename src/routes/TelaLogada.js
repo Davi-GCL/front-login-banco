@@ -82,7 +82,6 @@ export function TelaRestrita() {
           }
         }else{return ' '}
       });
-      alert(aux2 )
       aux2.forEach((a)=>{
         shortName += a+' ';
       })

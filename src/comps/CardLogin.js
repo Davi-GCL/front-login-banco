@@ -1,3 +1,4 @@
+import Alert from './Alert';
 import React from 'react';
 import {useState, useEffect} from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -25,7 +26,7 @@ export default function CardLogin({alerta, setAlerta}){
     .then((data) => {
       console.log(data);
       
-        setAlerta([<div className='alert alert-info'>Autenticado com sucesso!</div>]);
+        setAlerta([<Alert variant={'info'}>Autenticado com sucesso!</Alert>]);
         localStorage.setItem('loginId',data.id.toString());
         localStorage.setItem('token', data.token.toString());
 
@@ -35,7 +36,7 @@ export default function CardLogin({alerta, setAlerta}){
     })
     .catch(err => {
       console.log(err)
-      setAlerta([<div className='alert alert-danger'>CPF ou senha incorretos!</div>]);
+      setAlerta([<Alert variant={'danger'}>CPF ou senha incorretos!</Alert>]);
     });
   }
 

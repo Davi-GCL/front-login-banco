@@ -1,5 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
+import Alert from './Alert';
 
 export default function CardCadastro({toNextForm , states}){
 
@@ -40,9 +41,9 @@ export default function CardCadastro({toNextForm , states}){
     if (camposVazios.length > 0 || camposVaziosUser.length > 0) {
       
       setCamposVazios(camposVazios);
-      setAlerta([
-        <div className='alert alert-warning'>Formulário de usuario não preenchidos: {camposVaziosUser.map((aux)=>{return aux+', '})}</div>,
-        <div className='alert alert-warning'>Formulário de conta não preenchidos: {camposVazios.map((aux)=>{return aux+', '})}</div>
+
+      setAlerta([...alerta,
+        <Alert variant={'warning'} key={Math.floor(Math.random()*10)}>Formulários de conta não preenchidos: {camposVazios.map((aux)=>{return aux+', '})}</Alert>
       ]);
     }
     else{
@@ -59,14 +60,14 @@ export default function CardCadastro({toNextForm , states}){
     })
     .then((data) => {
       console.log(data);
-      console.log(typeof(data.Cpf))
+      console.log(typeof(data.cpf))
       if(typeof(data.Cpf) == "boolean" || typeof(data.cpf) == "boolean"){
         setDataExist({...data});
-        setAlerta([<div className='alert alert-warning'>CPF, Email ou Telefone já foram cadastrados!</div>]);
+        setAlerta([<Alert variant={'warning'}>CPF, Email ou Telefone já foram cadastrados!</Alert>]);
       }
       else{
         setForm({ ...form, idUsuario: data.Id });
-        setAlerta([<div className='alert alert-info'>Usuario: {data.Nome} Id: {data.Id}. Criado com sucesso!</div>]);
+        setAlerta([<Alert variant={'info'}>Usuario: {data.Nome} Id: {data.Id}. Criado com sucesso!</Alert>]);
       }
 
     })
@@ -76,7 +77,7 @@ export default function CardCadastro({toNextForm , states}){
   }
 
     return(
-        <div className='card px-5 py-4 col-lg-4 col-md-6' onLoad={()=>console.log("ONLOAD")}>
+        <div className='card px-5 py-4 col-lg-4 col-md-6'>
           <div className="card-title">
             <h4 className='text-center'>Cadastre-se gratuitamente </h4>
           </div>
@@ -112,7 +113,7 @@ export default function CardCadastro({toNextForm , states}){
             <div className="row mb-3">
               <label htmlFor="input-senha" className="form-label h6">PIN:</label>
               <input type="password" name='input-senha' placeholder='Definir senha de transações na conta' value={form['setSenha']} className="form-control" onChange={({currentTarget}) => 
-              {if(currentTarget.value.length <= 4)setForm({...form, ['setSenha']: currentTarget.value})}}/>
+              {if(currentTarget.value.length <= 4)setForm({...form, ['setSenha']: currentTarget.value})}} onKeyUp={(e)=>{if(e.key=='Enter')document.getElementById('btn-submit').focus()}}/>
               <li className='form-text'>Apenas números</li>
               <li className='form-text'>4 caracteres</li>
             </div>
@@ -124,7 +125,7 @@ export default function CardCadastro({toNextForm , states}){
             </div> */}
             <a className='btn-return' onClick={()=>{toNextForm(0)}}>Retornar</a>
             <div className="button-area row mt-3">
-              <button type="submit" className='btn btn-primary w-100' onClick={handleSubmit}>Cadastrar</button>
+              <button type="submit" className='btn btn-primary w-100' id='btn-submit' onClick={handleSubmit}>Cadastrar</button>
             </div>
           </div>
         </div>
