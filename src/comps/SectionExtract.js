@@ -36,7 +36,7 @@ export default function SectionExtract({codConta, useCensor}) {
                     <p style={{justifySelf:'end',margin:'0px'}}>{extract.dataHora}</p>
                 </div>
             )).reverse().splice(0,limit)}
-            <button onClick={()=>setLimit(limit>amount? amount : 6)}>...</button>
+            <button className='btn btn-expand' onClick={()=>setLimit(limit>amount? amount : 6)}>{limit>amount?'Ver menos':'Ver mais'}</button>
         </div>
     )
 }

@@ -29,7 +29,13 @@
     transition: all ease-out 0.3s;
 }
 
-.btn-services:hover{
+.btn-expand{
+    border-radius: 6px;
+    border: 1px solid var(--banco-primary, #FF8C00);
+    background: #FFF;
+}
+
+.btn-services:hover, .btn-expand:hover{
     background-color: #FF8C00;
     color: #FFF;
 }
