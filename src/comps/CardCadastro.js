@@ -42,7 +42,7 @@ export default function CardCadastro({toNextForm , states}){
       
       setCamposVazios(camposVazios);
 
-      setAlerta([...alerta,
+      setAlerta([
         <Alert variant={'warning'} key={Math.floor(Math.random()*10)}>Formulários de conta não preenchidos: {camposVazios.map((aux)=>{return aux+', '})}</Alert>
       ]);
     }
