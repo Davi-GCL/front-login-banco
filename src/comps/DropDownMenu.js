@@ -20,15 +20,15 @@ function DropDownMenu({contas, current}) {
                 | CONTA N°0006
             </button> */}
             <ul className={`dropdown-contas d-block`} style={{transform:0}}>
-                <li><div className='dropdown-item dropdown-button' id='' onClick={()=>setToggleDrop(!toggleDrop)}>| Conta N°{current} <i class={`bi bi-chevron-${toggleDrop?'up':'down'}`}></i> </div></li>
+                <li><div className='dropdown-item dropdown-button' id='' onClick={()=>setToggleDrop(!toggleDrop)}>| Conta N°{current} <i className={`bi bi-chevron-${toggleDrop?'up':'down'}`}></i> </div></li>
 
                 <div className={`${toggleDrop?'d-block':'d-none'}`}>
                     <li><h6 className="dropdown-header py-1">Suas contas: </h6></li>
                     
                     {/* Exibe as contas do usuario cada uma como um item do menu */}
                     {contas.map((conta)=>(
-                        <li><a className="dropdown-item" onClick={()=>{window.location.href= `http://localhost:3000/contas/${conta.codConta}`}}>{conta.codConta}
-                        <span class="text-secondary">{types[conta.tipo]}</span></a></li>
+                        <li key={conta.codConta}><a className="dropdown-item" onClick={()=>{window.location.href= `http://localhost:3000/contas/${conta.codConta}`}}>{conta.codConta}
+                        <span className="text-secondary">{types[conta.tipo]}</span></a></li>
                     )) }
 
                 </div>
