@@ -32,15 +32,12 @@ function TelaContaIndividual() {
     console.log(data);
     
     let dataArr = [];
-    var username;
     data.forEach(e => {
       if(e.idUsuario == idUsuario){
         dataArr.push({['codConta']:e.codConta, ['agencia']:e.agencia,['saldo']:e.saldo , ['tipo']:e.tipo , ['idUsuario']:e.idUsuario});
-        username = e.idUsuarioNavigation.nome;
       }  
     });
     // localStorage.setItem("username", username);
-    setLoginInfo(username);
     setContas(dataArr);
   }
 
@@ -68,12 +65,12 @@ function TelaContaIndividual() {
       <div className='container-transactions position-relative mt-4'>
         <div>
           <div className="position-absolute d-flex justify-space-between header-conta" style={{zIndex:10, top:-40}}>
-            <h4 className='fw-light'>{loginInfo}</h4>
+            <h4 className='fw-light'>Olá, {loginInfo.split(" ").length >2? loginInfo.split(" ").slice(0,2).reduce((pre,atual)=>pre+" "+atual):loginInfo.split(" ")[0]}</h4>
             <DropDownMenu contas={contas} current={idConta}/>
           </div>
           <SectionServices useConta={{conta,setConta}} useCensor={{censor, setCensor}}/>
         </div>
-        <SectionExtract codConta={conta.codConta}/>
+        <SectionExtract codConta={conta.codConta} useCensor={{censor, setCensor}}/>
       </div>
       ) 
     }else{ 

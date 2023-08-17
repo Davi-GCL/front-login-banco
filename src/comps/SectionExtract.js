@@ -1,9 +1,11 @@
 import React,{useEffect, useState} from 'react'
 
-export default function SectionExtract({codConta}) {
+export default function SectionExtract({codConta, useCensor}) {
     const token = localStorage.getItem('token')
+    const {censor, setCensor} = useCensor;
     const [extracts, setExtracts] = useState([{}])
-    const [limit, setLimit] = useState(5);
+    const amount = 3;
+    const [limit, setLimit] = useState(amount);
 
     const types = {'1':'Depósito' , '2':'Saque' , '3':'Transferência'} //Dictionary para converter o valor de um tipo no nome dele
 
@@ -25,16 +27,16 @@ export default function SectionExtract({codConta}) {
 
     return (
         <div className='card p-4 mt-4 card-extract'>
-            <h4 className='mb-4'>Últimas transações</h4>
+            <h4 className='mb-4'>Últimas movimentações</h4>
             {extracts.map((extract)=>(
-                <div className='alert alert-light d-grid'>
+                <div className='alert alert-light d-grid' key={Math.floor(Math.random()*1000)}>
                     <div className='d-flex justify-content-between'><h5 className='alert-heading'>{types[extract.tipo]}</h5> 
-                    <h5>R${extract.valor}</h5></div>
+                    <h5 className={censor? 'text-censor' : 'text'}>R${extract.valor}</h5></div>
                     <hr></hr> 
                     <p style={{justifySelf:'end',margin:'0px'}}>{extract.dataHora}</p>
                 </div>
             )).reverse().splice(0,limit)}
-            <button onClick={()=>setLimit(limit>5? 5 : 10)}>...</button>
+            <button onClick={()=>setLimit(limit>amount? amount : 6)}>...</button>
         </div>
     )
 }

@@ -7,7 +7,7 @@ export default function CardCadastro({toNextForm , states}){
   const {form, setForm, formUser, alerta, setAlerta, dataExist,setDataExist} = states;
   const [camposVazios, setCamposVazios] = useState([]);
   
-//-----------------------------------\\
+//----------------------------------------------------------------------------------------\\
 
   async function postConta(userId) {
     setForm({ ...form, idUsuario: userId });
@@ -22,7 +22,7 @@ export default function CardCadastro({toNextForm , states}){
     })
       .then(res => res.json())
       .then((data) => {
-        setAlerta([...alerta, <div className='alert alert-info'>Conta: {data.codConta} Agencia:{data.agencia}, Criado com sucesso!</div>])
+        setAlerta([...alerta, <Alert variant={'info'}>Conta: {data.codConta} Agencia:{data.agencia}, Criado com sucesso!</Alert>])
       })
       .catch(err => console.log(err));
   }
@@ -53,9 +53,12 @@ export default function CardCadastro({toNextForm , states}){
       body: JSON.stringify(formUser)
     })
     .then((response) => {
-      // if (!response.ok) {
-      //   throw new Error(response.status + ' ' + response.);
-      // }
+      if (!response.ok) {
+        if(response.status == 400){
+          console.log(response.text);
+        }
+        throw new Error(response.status + ' ' + response.statusText);
+      }
       return response.json();
     })
     .then((data) => {
